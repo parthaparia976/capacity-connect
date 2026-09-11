@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Trainer Dashboard - Capacity Connect</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #312e81, #4f46e5);
+      color: white;
+      padding: 25px 15px;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+      padding: 10px 15px 30px;
+    }
+
+    .logo span {
+      color: #c4b5fd;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      padding: 13px 15px;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    .logout {
+      position: absolute;
+      bottom: 25px;
+      left: 15px;
+      right: 15px;
+    }
+
+    /* MAIN */
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      padding: 35px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 30px;
+    }
+
+    .topbar p {
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .profile {
+      background: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    /* STAT CARDS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+    }
+
+    .stat-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .stat h2 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .stat p {
+      color: #6b7280;
+    }
+
+    /* COURSE SECTION */
+
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 22px;
+    }
+
+    .create-btn {
+      background: #4f46e5;
+      color: white;
+      text-decoration: none;
+      padding: 11px 18px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .course {
+      border: 1px solid #e5e7eb;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    .course h3 {
+      margin-bottom: 8px;
+    }
+
+    .course p {
+      color: #6b7280;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .course small {
+      color: #4f46e5;
+      font-weight: bold;
+    }
+
+    .course-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 9px 15px;
+      background: #eef2ff;
+      color: #4338ca;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    /* QUICK ACTIONS */
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .action {
+      padding: 22px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #1f2937;
+    }
+
+    .action:hover {
+      background: #f8f9ff;
+    }
+
+    .action-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .action h3 {
+      margin-bottom: 6px;
+    }
+
+    .action p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .course-grid,
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .main {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        padding: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      <span>C</span> capacity<b>connect</b>
+    </div>
+
+    <nav class="nav">
+
+      <a href="trainer.html" class="active">
+        🏠 Dashboard
+      </a>
+
+      <a href="#courses">
+        📚 My Courses
+      </a>
+
+      <a href="#create">
+        ➕ Create Course
+      </a>
+
+      <a href="#modules">
+        📦 Learning Modules
+      </a>
+
+      <a href="#quiz">
+        📝 Quiz
+      </a>
+
+      <a href="#students">
+        👨‍🎓 Student Performance
+      </a>
+
+      <a href="#competency">
+        🎯 Competency
+      </a>
+
+    </nav>
+
+    <a href="login.html" class="nav logout">
+      🚪 Logout
+    </a>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+        <h1>Trainer Dashboard 👨‍🏫</h1>
+        <p>Manage courses, learning modules and student performance.</p>
+      </div>
+
+      <div class="profile">
+        👤 <span id="trainer-name">Trainer</span>
+      </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-icon">📚</div>
+        <h2>4</h2>
+        <p>Total Courses</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">👨‍🎓</div>
+        <h2>128</h2>
+        <p>Enrolled Employees</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">📝</div>
+        <h2>12</h2>
+        <p>Quizzes Created</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">📊</div>
+        <h2>82%</h2>
+        <p>Average Score</p>
+      </div>
+
+    </section>
+
+
+    <!-- COURSES -->
+
+    <section class="section" id="courses">
+
+      <div class="section-header">
+
+        <h2>📚 My Courses</h2>
+
+        <a href="#create" class="create-btn">
+          + Create New Course
+        </a>
+
+      </div>
+
+      <div id="course-list" class="course-grid">
+
+        <div class="course">
+
+          <h3>Cyber Security Awareness</h3>
+
+          <p>
+            Understand threats, recognize risks,
+            and protect your organization.
+          </p>
+
+          <small>Mandatory Training</small>
+
+          <br>
+
+          <a href="#modules" class="course-btn">
+            Manage Course →
+          </a>
+
+        </div>
+
+        <div class="course">
+
+          <h3>Leadership Skills</h3>
+
+          <p>
+            Develop leadership, communication and
+            team management capabilities.
+          </p>
+
+          <small>Professional Development</small>
+
+          <br>
+
+          <a href="#modules" class="course-btn">
+            Manage Course →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="section">
+
+      <div class="section-header">
+        <h2>⚡ Quick Actions</h2>
+      </div>
+
+      <div class="actions">
+
+        <a href="#create" class="action">
+
+          <div class="action-icon">➕</div>
+
+          <h3>Create Course</h3>
+
+          <p>
+            Create a new training course for employees.
+          </p>
+
+        </a>
+
+
+        <a href="#quiz" class="action">
+
+          <div class="action-icon">📝</div>
+
+          <h3>Create Quiz</h3>
+
+          <p>
+            Add questions and set passing marks.
+          </p>
+
+        </a>
+
+
+        <a href="#students" class="action">
+
+          <div class="action-icon">📊</div>
+
+          <h3>View Performance</h3>
+
+          <p>
+            Monitor employee learning and quiz results.
+          </p>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- CREATE COURSE -->
+
+    <section class="section" id="create">
+
+      <div class="section-header">
+        <h2>➕ Create New Course</h2>
+      </div>
+
+      <form id="course-form">
+
+  <label>Course Title</label>
+  <input
+    type="text"
+    id="course-title"
+    placeholder="Enter course title"
+    required
+    style="width:100%; padding:12px; margin:8px 0 18px; border:1px solid #ddd; border-radius:8px;"
+  >
+
+  <label>Category</label>
+  <input
+    type="text"
+    id="course-category"
+    placeholder="e.g. Professional Development"
+    required
+    style="width:100%; padding:12px; margin:8px 0 18px; border:1px solid #ddd; border-radius:8px;"
+  >
+
+  <label>Duration</label>
+  <input
+    type="text"
+    id="course-duration"
+    placeholder="e.g. 4 hours"
+    required
+    style="width:100%; padding:12px; margin:8px 0 18px; border:1px solid #ddd; border-radius:8px;"
+  >
+
+  <label>Description</label>
+  <textarea
+    id="course-description"
+    placeholder="Enter course description"
+    required
+    rows="5"
+    style="width:100%; padding:12px; margin:8px 0 18px; border:1px solid #ddd; border-radius:8px; resize:vertical;"
+  ></textarea>
+
+  <button
+    type="submit"
+    style="
+      background:#4f46e5;
+      color:white;
+      border:none;
+      padding:12px 22px;
+      border-radius:9px;
+      font-weight:bold;
+      cursor:pointer;
+    "
+  >
+    ➕ Create Course
+  </button>
+
+</form>
+
+<p id="course-message" style="margin-top:15px;"></p>
+
+    </section>
+
+
+    <!-- MODULES -->
+
+    <section class="section" id="modules">
+
+      <div class="section-header">
+        <h2>📦 Learning Modules</h2>
+      </div>
+
+      <p style="color:#6b7280;">
+        Add videos, PDFs, documents and learning materials
+        to your courses.
+      </p>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section class="section" id="quiz">
+      <section id="quiz" style="
+  padding:30px;
+  background:#f8f9ff;
+">
+
+  <h2>📝 Create Quiz</h2>
+
+  <div style="
+    background:white;
+    padding:25px;
+    margin-top:20px;
+    border-radius:16px;
+    box-shadow:0 5px 18px rgba(0,0,0,0.06);
+  ">
+
+    <form id="trainer-quiz-form">
+      <div style="margin-top:20px;">
+  <label>Question 1</label>
+
+  <input
+    id="question-1"
+    type="text"
+    placeholder="Enter your question"
+    style="width:100%;padding:12px;margin:8px 0 12px;border:1px solid #ddd;border-radius:8px;"
+  >
+
+  <input
+    type="text"
+    placeholder="Option A"
+    style="width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:8px;"
+  >
+
+  <input
+    type="text"
+    placeholder="Option B"
+    style="width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:8px;"
+  >
+
+  <input
+    type="text"
+    placeholder="Option C"
+    style="width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:8px;"
+  >
+
+  <input
+    type="text"
+    placeholder="Option D"
+    style="width:100%;padding:10px;margin:5px 0;border:1px solid #ddd;border-radius:8px;"
+  >
+
+  <select style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:8px;">
+    <option>Correct Answer</option>
+    <option>Option A</option>
+    <option>Option B</option>
+    <option>Option C</option>
+    <option>Option D</option>
+  </select>
+</div>
+
+
+      <label>Quiz Title</label>
+      <input
+        id="quiz-title"
+        type="text"
+        placeholder="e.g. Communication Skills Quiz"
+        required
+        style="width:100%;padding:12px;margin:8px 0 18px;border:1px solid #ddd;border-radius:8px;"
+      >
+
+      <label>Number of Questions</label>
+      <input
+        id="quiz-questions"
+        type="number"
+        min="1"
+        placeholder="e.g. 10"
+        required
+        style="width:100%;padding:12px;margin:8px 0 18px;border:1px solid #ddd;border-radius:8px;"
+      >
+
+      <label>Passing Marks (%)</label>
+      <input
+        id="passing-marks"
+        type="number"
+        min="1"
+        max="100"
+        value="70"
+        required
+        style="width:100%;padding:12px;margin:8px 0 18px;border:1px solid #ddd;border-radius:8px;"
+      >
+
+      <button type="submit" style="
+        padding:12px 22px;
+        border:none;
+        border-radius:8px;
+        background:#4f46e5;
+        color:white;
+        font-weight:bold;
+        cursor:pointer;
+      ">
+        ➕ Create Quiz
+      </button>
+
+    </form>
+
+    <p id="quiz-message" style="margin-top:15px;"></p>
+
+  </div>
+
+</section>
+
+<section id="modules" style="
+  padding:30px;
+  background:#f8f9ff;
+">
+
+  <h2>🎓 Learning Modules</h2>
+
+  <div style="
+    background:white;
+    padding:25px;
+    margin-top:20px;
+    border-radius:16px;
+    box-shadow:0 5px 18px rgba(0,0,0,0.06);
+  ">
+
+    <h3>Add Learning Module</h3>
+
+    <form id="module-form" style="margin-top:20px;">
+
+      <label>Course</label>
+      <select id="module-course" required style="
+        width:100%;
+        padding:12px;
+        margin:8px 0 18px;
+        border:1px solid #ddd;
+        border-radius:8px;
+      ">
+        <option value="">Select a course</option>
+      </select>
+
+      <label>Module Title</label>
+      <input
+        id="module-title"
+        type="text"
+        placeholder="e.g. Introduction to Communication"
+        required
+        style="
+          width:100%;
+          padding:12px;
+          margin:8px 0 18px;
+          border:1px solid #ddd;
+          border-radius:8px;
+        "
+      >
+
+      <label>Learning Content</label>
+      <textarea
+        id="module-content"
+        rows="5"
+        placeholder="Write learning content here..."
+        required
+        style="
+          width:100%;
+          padding:12px;
+          margin:8px 0 18px;
+          border:1px solid #ddd;
+          border-radius:8px;
+        "
+      ></textarea>
+
+      <label>Material Type</label>
+      <select id="module-type" required style="
+        width:100%;
+        padding:12px;
+        margin:8px 0 18px;
+        border:1px solid #ddd;
+        border-radius:8px;
+      ">
+        <option value="Text">Text</option>
+        <option value="Video">Video</option>
+        <option value="PDF">PDF</option>
+        <option value="Document">Document</option>
+      </select>
+
+      <button type="submit" style="
+        padding:12px 22px;
+        border:none;
+        border-radius:8px;
+        background:#4f46e5;
+        color:white;
+        font-weight:bold;
+        cursor:pointer;
+      ">
+        ➕ Add Module
+      </button>
+
+    </form>
+
+    <p id="module-message" style="margin-top:15px;"></p>
+
+  </div>
+
+</section>
+      <div class="section-header">
+        <h2>📝 Quiz Management</h2>
+      </div>
+
+      <p style="color:#6b7280;">
+        Create questions, set passing marks and monitor quiz results.
+      </p>
+
+    </section>
+
+
+    <!-- STUDENTS -->
+
+    <section class="section" id="students">
+
+      <div class="section-header">
+        <h2>👨‍🎓 Student Performance</h2>
+      </div>
+
+      <p style="color:#6b7280;">
+        Track employee progress, quiz scores and course completion.
+      </p>
+
+    </section>
+
+
+    <!-- COMPETENCY -->
+
+    <section class="section" id="competency">
+
+      <div class="section-header">
+        <h2>🎯 Student Competency</h2>
+      </div>
+
+      <p style="color:#6b7280;">
+        View competency levels and identify employee skill gaps.
+      </p>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<script>
+
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
+
+  if (!user) {
+
+    window.location.replace("login.html");
+
+  } else {
+
+    document.getElementById("trainer-name").textContent =
+      user.name || "Trainer";
+
+  }
+
+</script>
+<script>
+  document.getElementById("course-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const user = JSON.parse(
+      localStorage.getItem("capacityConnectUser") || "null"
+    );
+
+    if (!user) {
+      alert("Please login first.");
+      window.location.replace("login.html");
+      return;
+    }
+
+    const courseData = {
+      email: user.email,
+      title: document.getElementById("course-title").value.trim(),
+      category: document.getElementById("course-category").value.trim(),
+      duration: document.getElementById("course-duration").value.trim(),
+      description: document.getElementById("course-description").value.trim()
+    };
+
+    try {
+      const response = await fetch("/api/courses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(courseData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Could not create course.");
+      }
+
+      document.getElementById("course-message").textContent =
+        "✅ Course created successfully!";
+
+      document.getElementById("course-form").reset();
+
+      console.log("Created course:", result.course);
+
+    } catch (error) {
+      document.getElementById("course-message").textContent =
+        "❌ " + error.message;
+
+      console.error(error);
+    }
+  });
+</script>
+<script>
+async function loadTrainerCourses() {
+  const courseList = document.getElementById("trainer-course-list");
+
+  try {
+    const response = await fetch("/api/courses");
+    const courses = await response.json();
+
+    if (!courses.length) {
+      courseList.innerHTML = `
+        <p style="padding:20px;">
+          No courses created yet.
+        </p>
+      `;
+      return;
+    }
+
+    courseList.innerHTML = courses.map(course => `
+      <div style="
+        background:white;
+        padding:20px;
+        margin-top:15px;
+        border-radius:15px;
+        border:1px solid #e5e7eb;
+        box-shadow:0 5px 15px rgba(0,0,0,0.06);
+      ">
+
+        <h3>📚 ${course.title}</h3>
+
+        <p style="color:#6b7280;margin:10px 0;">
+          ${course.description || "No description available."}
+        </p>
+
+        <p>
+          <strong>Category:</strong>
+          ${course.category || "General"}
+        </p>
+
+        <p>
+          <strong>Duration:</strong>
+          ${course.duration || "Not specified"}
+        </p>
+
+        <button
+        onclick="manageCourse('${course.id}')"
+          style="
+            margin-top:15px;
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            background:#4f46e5;
+            color:white;
+            cursor:pointer;
+          "
+        >
+          Manage Course
+        </button>
+
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error(error);
+
+    courseList.innerHTML = `
+      <p style="color:red;">
+        ❌ Unable to load courses.
+      </p>
+    `;
+  }
+}
+
+loadTrainerCourses();
+</script>
+<script>
+async function loadModuleCourses() {
+  const courseSelect = document.getElementById("module-course");
+
+  try {
+    const response = await fetch("/api/courses");
+    const courses = await response.json();
+
+    if (!courses.length) {
+      courseSelect.innerHTML =
+        '<option value="">No courses available</option>';
+      return;
+    }
+
+    courseSelect.innerHTML =
+      '<option value="">Select a course</option>' +
+      courses.map(course => `
+        <option value="${course.id}">
+          ${course.title}
+        </option>
+      `).join("");
+
+  } catch (error) {
+    console.error("Could not load courses:", error);
+
+    courseSelect.innerHTML =
+      '<option value="">Unable to load courses</option>';
+  }
+}
+
+loadModuleCourses();
+</script>
+<script>
+document.getElementById("module-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const title = document.getElementById("module-title").value;
+  const type = document.getElementById("module-type").value;
+
+  document.getElementById("module-message").innerHTML =
+    "✅ Module added successfully: " + title + " (" + type + ")";
+
+  this.reset();
+});
+</script>
+<script>
+function logout() {
+  localStorage.removeItem("capacityConnectUser");
+  window.location.href = "login.html";
+}
+</script>
+<script>
+function manageCourse(courseId) {
+  document.getElementById("modules").scrollIntoView({
+    behavior: "smooth"
+  });
+
+  alert("Course selected. You can now add learning modules.");
+}
+</script>
+<script>
+document.getElementById("trainer-quiz-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const title = document.getElementById("quiz-title").value;
+  const questions = document.getElementById("quiz-questions").value;
+  const passing = document.getElementById("passing-marks").value;
+
+  document.getElementById("quiz-message").innerHTML =
+    "✅ Quiz created successfully: " +
+    title +
+    " (" + questions + " questions, " + passing + "% passing marks)";
+
+  this.reset();
+  setTimeout(function() {
+  window.location.href = "quiz.html";
+}, 1000);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Competency — Capacity Connect</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      margin-top: 0;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .stat h3 {
+      margin: 0 0 10px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .skill {
+      padding: 18px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .skill:last-child {
+      border-bottom: none;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-weight: bold;
+    }
+
+    .bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: #2563eb;
+    }
+
+    .level {
+      margin-top: 8px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .gap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      background: #fff7ed;
+    }
+
+    .gap strong {
+      color: #c2410c;
+    }
+
+    .recommended {
+      background: #eff6ff;
+      padding: 18px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .recommended h3 {
+      margin-top: 0;
+      color: #1d4ed8;
+    }
+
+    @media (max-width: 750px) {
+      .overview {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="header">
+
+      <h1>🎯 My Competency</h1>
+
+      <a href="employee.html" class="back-btn">
+        ← Dashboard
+      </a>
+
+    </div>
+
+
+    <section class="hero">
+
+      <h2>Understand Your Skills 🚀</h2>
+
+      <p>
+        Track your current competency levels and identify
+        areas where further learning can help you grow.
+      </p>
+
+    </section>
+
+
+    <!-- Overview -->
+
+    <section class="overview">
+
+      <div class="stat">
+        <h3>Overall Competency</h3>
+        <div class="number">72%</div>
+      </div>
+
+      <div class="stat">
+        <h3>Skills Assessed</h3>
+        <div class="number">6</div>
+      </div>
+
+      <div class="stat">
+        <h3>Skills Developing</h3>
+        <div class="number">3</div>
+      </div>
+
+    </section>
+
+
+    <!-- Skills -->
+
+    <section class="section">
+
+      <h2>📈 Skill Competency</h2>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Communication</span>
+          <span>85%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:85%"></div>
+        </div>
+
+        <div class="level">
+          Level: Advanced
+        </div>
+
+      </div>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Leadership</span>
+          <span>70%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:70%"></div>
+        </div>
+
+        <div class="level">
+          Level: Intermediate
+        </div>
+
+      </div>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Digital Skills</span>
+          <span>80%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:80%"></div>
+        </div>
+
+        <div class="level">
+          Level: Advanced
+        </div>
+
+      </div>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Problem Solving</span>
+          <span>65%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:65%"></div>
+        </div>
+
+        <div class="level">
+          Level: Intermediate
+        </div>
+
+      </div>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Teamwork</span>
+          <span>75%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:75%"></div>
+        </div>
+
+        <div class="level">
+          Level: Intermediate
+        </div>
+
+      </div>
+
+
+      <div class="skill">
+
+        <div class="skill-header">
+          <span>Project Management</span>
+          <span>55%</span>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:55%"></div>
+        </div>
+
+        <div class="level">
+          Level: Developing
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Skill Gaps -->
+
+    <section class="section">
+
+      <h2>🔍 Skill Gaps</h2>
+
+      <p>
+        These areas may need additional learning and practice.
+      </p>
+
+
+      <div class="gap">
+
+        <span>Project Management</span>
+
+        <strong>55% — Needs Improvement</strong>
+
+      </div>
+
+
+      <div class="gap">
+
+        <span>Problem Solving</span>
+
+        <strong>65% — Developing</strong>
+
+      </div>
+
+
+      <div class="gap">
+
+        <span>Leadership</span>
+
+        <strong>70% — Developing</strong>
+
+      </div>
+
+
+      <div class="recommended">
+
+        <h3>💡 Recommended Learning</h3>
+
+        <p>
+          Complete the Project Management and Leadership courses
+          to improve your competency in these areas.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const user = JSON.parse(
+      localStorage.getItem("capacityConnectUser") || "null"
+    );
+
+    if (!user) {
+      window.location.replace("login.html");
+    }
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Progress — Capacity Connect</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      margin-top: 0;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .stat-card h3 {
+      margin: 0 0 10px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .course-row {
+      padding: 18px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .course-row:last-child {
+      border-bottom: none;
+    }
+
+    .course-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-weight: bold;
+    }
+
+    .progress {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #2563eb;
+    }
+
+    .details {
+      margin-top: 8px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .achievement {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .achievement-icon {
+      font-size: 30px;
+    }
+
+    @media (max-width: 850px) {
+      .summary {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="header">
+
+      <h1>📊 My Progress</h1>
+
+      <a href="employee.html" class="back-btn">
+        ← Dashboard
+      </a>
+
+    </div>
+
+
+    <section class="hero">
+
+      <h2>Track Your Growth 🚀</h2>
+
+      <p>
+        Monitor your courses, learning progress, assessments,
+        and achievements in one place.
+      </p>
+
+    </section>
+
+
+    <!-- Summary -->
+
+    <section class="summary">
+
+      <div class="stat-card">
+        <h3>Overall Progress</h3>
+        <div class="number">65%</div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Courses</h3>
+        <div class="number">4</div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Completed</h3>
+        <div class="number">2</div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Quiz Average</h3>
+        <div class="number">82%</div>
+      </div>
+
+    </section>
+
+
+    <!-- Course Progress -->
+
+    <section class="section">
+
+      <h2>📚 Course Progress</h2>
+
+
+      <div class="course-row">
+
+        <div class="course-title">
+          <span>Leadership Skills</span>
+          <span>65%</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" style="width:65%"></div>
+        </div>
+
+        <div class="details">
+          6 of 10 modules completed
+        </div>
+
+      </div>
+
+
+      <div class="course-row">
+
+        <div class="course-title">
+          <span>Communication Skills</span>
+          <span>40%</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" style="width:40%"></div>
+        </div>
+
+        <div class="details">
+          4 of 10 modules completed
+        </div>
+
+      </div>
+
+
+      <div class="course-row">
+
+        <div class="course-title">
+          <span>Digital Skills</span>
+          <span>80%</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" style="width:80%"></div>
+        </div>
+
+        <div class="details">
+          8 of 10 modules completed
+        </div>
+
+      </div>
+
+
+      <div class="course-row">
+
+        <div class="course-title">
+          <span>Workplace Safety</span>
+          <span>100%</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" style="width:100%"></div>
+        </div>
+
+        <div class="details">
+          Course completed
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Achievements -->
+
+    <section class="section">
+
+      <h2>🏆 Achievements</h2>
+
+      <div class="achievement">
+        <div class="achievement-icon">🎓</div>
+        <div>
+          <strong>Course Completed</strong>
+          <div class="details">
+            Successfully completed Workplace Safety.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="achievement">
+        <div class="achievement-icon">⭐</div>
+        <div>
+          <strong>High Quiz Score</strong>
+          <div class="details">
+            Achieved an average quiz score of 82%.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="achievement">
+        <div class="achievement-icon">🚀</div>
+        <div>
+          <strong>Learning Journey Started</strong>
+          <div class="details">
+            Keep learning to unlock more achievements.
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const user = JSON.parse(
+      localStorage.getItem("capacityConnectUser") || "null"
+    );
+
+    if (!user) {
+      window.location.replace("login.html");
+    }
+
+  </script>
+
+</body>
+</html>

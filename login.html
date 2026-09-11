@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Capacity Connect — Sign In</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+
+      <a href="#" class="logo">
+        <div class="logo-icon">C</div>
+
+        <div class="logo-text">
+          <span>CAPACITY</span>
+          <strong>CONNECT</strong>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#platform">Platform</a>
+<a href="#learning">Learning</a>
+<a href="#resources">Resources</a>
+      </nav>
+
+      <a href="#login" class="get-started">
+        Get Started
+        <span>→</span>
+      </a>
+
+    </header>
+
+
+    <!-- MAIN HERO -->
+    <main class="hero">
+
+      <!-- LEFT SIDE -->
+      <section class="hero-content">
+
+        <div class="badge">
+          <span></span>
+          A Digital Learning & Capacity Building Platform
+        </div>
+
+        <h1>
+          Build skills.
+          <br>
+          <span>Create impact.</span>
+        </h1>
+
+        <p class="hero-description">
+          Empowering organizations and individuals through
+          continuous learning, competency development and
+          knowledge sharing.
+        </p>
+
+
+        <!-- FEATURES -->
+        <div class="features">
+
+          <div class="feature">
+            <div class="feature-icon">▣</div>
+            <div>
+              <strong>Online</strong>
+              <small>Courses</small>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">↗</div>
+            <div>
+              <strong>Track</strong>
+              <small>Progress</small>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">♧</div>
+            <div>
+              <strong>Build</strong>
+              <small>Competencies</small>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">✦</div>
+            <div>
+              <strong>Get</strong>
+              <small>Certificates</small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- VISUAL AREA -->
+        <div class="visual-area">
+
+          <div class="green-shape shape-one"></div>
+          <div class="green-shape shape-two"></div>
+
+          <div class="learning-card">
+            <div class="card-icon">🎓</div>
+
+            <div>
+              <strong>Learn</strong>
+              <p>New skills,<br>better tomorrow.</p>
+            </div>
+
+            <span>↗</span>
+          </div>
+
+
+          <div class="growth-card">
+
+            <div class="growth-icon">▮▮▮</div>
+
+            <div>
+              <small>Skill Growth</small>
+              <strong>+72% ↗</strong>
+            </div>
+
+          </div>
+
+
+          <div class="visual-circle">
+           <div class="laptop">
+  <div class="screen">
+    <div class="screen-content">
+      <span>CAPACITY</span>
+      <strong>CONNECT</strong>
+      <small>LEARN • GROW • ACHIEVE</small>
+    </div>
+  </div>
+
+  <div class="keyboard"></div>
+</div>
+          </div>
+
+        </div>
+
+
+        <div class="hand-text">
+          Better Learning
+          <br>
+          <span>A Brighter Future</span>
+        </div>
+
+      </section>
+
+
+      <!-- LOGIN SIDE -->
+      <section class="login-area" id="login">
+
+        <div class="login-card">
+
+          <div class="login-heading">
+
+            <span class="welcome">
+              WELCOME BACK
+            </span>
+
+            <h2>
+              Sign In to
+              <br>
+              <strong>CAPACITY CONNECT</strong>
+            </h2>
+
+            <p>
+              Enter your details to access your
+              learning space.
+            </p>
+
+          </div>
+
+
+          <!-- IMPORTANT:
+               Keep these IDs because login.js uses them.
+          -->
+
+          <form id="login-form">
+
+            <label>
+              Full name
+
+              <div class="input-box">
+                <span>♙</span>
+
+                <input
+                  id="full-name"
+                  type="text"
+                  placeholder="Enter your full name"
+                  autocomplete="name"
+                  required
+                >
+              </div>
+            </label>
+
+
+            <label>
+              Email address
+
+              <div class="input-box">
+                <span>✉</span>
+
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email address"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+            </label>
+
+
+            <label>
+              Password
+
+              <div class="input-box">
+                <span>♙</span>
+
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  minlength="6"
+                  required
+                >
+
+              <span class="eye" id="toggle-password">◉</span>  
+              </div>
+            </label>
+
+
+            <label>
+              Your role
+
+              <div class="input-box select-box">
+                <span>♧</span>
+
+                <select id="role" required>
+
+                  <option value="Learner">
+                    Learner / Employee
+                  </option>
+
+                  <option value="Trainer">
+                    Trainer
+                  </option>
+
+                  <option value="Admin">
+                    Administrator
+                  </option>
+
+                  <option value="Management">
+                    Management
+                  </option>
+
+                </select>
+
+                <span>⌄</span>
+              </div>
+            </label>
+
+
+            <button type="submit" class="signin-btn">
+              <span>Sign In</span>
+              <strong>→</strong>
+            </button>
+
+          </form>
+
+
+          <div class="login-bottom">
+
+            <div class="line">
+              <span></span>
+              <small>or</small>
+              <span></span>
+            </div>
+
+            <p>
+              Learn
+              <b>•</b>
+              Develop
+              <b>•</b>
+              Grow
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- YOUR EXISTING LOGIN JAVASCRIPT -->
+  <script src="login.js"></script>
+
+</body>
+
+</html>

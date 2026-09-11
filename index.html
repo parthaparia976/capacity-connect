@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capacity Connect — Learning Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="prototype.css" />
+    <link rel="stylesheet" href="fullapp.css" />
+    <link rel="stylesheet" href="courses.css" />
+    <script src="auth.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Capacity Connect home">
+          <span class="brand-mark">C</span>
+          <span>capacity<span>connect</span></span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" data-page="Dashboard"><span>⌂</span><b>Dashboard</b></button>
+          <button class="nav-item" data-page="My Learning"><span>▣</span><b>My Learning</b></button>
+          <button class="nav-item" data-page="Competencies"><span>◈</span><b>Competencies</b></button>
+          <button class="nav-item" data-page="Knowledge Hub"><span>◫</span><b>Knowledge Hub</b></button>
+          <button class="nav-item" data-page="Reports"><span>▥</span><b>Reports</b></button>
+          <button class="nav-item" data-page="Certificates"><span>✦</span><b>Certificates</b></button>
+          <button class="nav-item admin-only" data-page="Admin"><span>◉</span><b>Admin console</b></button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="learning-card">
+            <span class="spark">✦</span>
+            <strong>Keep growing!</strong>
+            <p>You're on a 6 day learning streak.</p>
+            <div class="streak"><i></i><i></i><i></i><i></i><i></i><i class="today"></i><i></i></div>
+          </div>
+          <button class="nav-item settings" data-page="Settings"><span>⚙</span><b>Settings</b></button>
+          <div class="user-mini"><div class="avatar avatar-small" id="user-initials">AM</div><div><strong id="user-name">Anirban Maity</strong><small id="user-role">Team Member</small></div><button id="sign-out" title="Sign out">↪</button></div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <button class="mobile-menu" aria-label="Open menu">☰</button>
+          <div class="crumb">Workspace <span>/</span> <b id="page-title">Dashboard</b></div>
+          <div class="top-actions">
+            <label class="search"><span>⌕</span><input id="course-search" placeholder="Search courses, topics..." /></label>
+            <button class="icon-button" id="notification-button" aria-label="Notifications">♧<em></em></button>
+            <button class="help-button">? <span>Help center</span></button>
+          </div>
+        </header>
+
+        <div id="dashboard-page" class="app-page active-page">
+        <section class="hero-row">
+          <div>
+            <p class="eyebrow">SATURDAY, 30 AUGUST</p>
+            <h1>Good morning, Anirban <span>✦</span></h1>
+            <p class="subtitle">Here's a snapshot of your growth journey. Keep up the momentum!</p>
+          </div>
+          <button class="outline-button" id="report-button">↗ &nbsp; View learning report</button>
+        </section>
+
+        <section class="stats-grid" aria-label="Learning statistics">
+          <article class="stat-card"><div class="stat-icon purple">▣</div><div><span>Courses in progress</span><strong>05</strong><small><b>+2</b> this month</small></div><div class="stat-graph graph-1"></div></article>
+          <article class="stat-card"><div class="stat-icon green">✓</div><div><span>Courses completed</span><strong>12</strong><small><b>+3</b> this month</small></div><div class="stat-graph graph-2"></div></article>
+          <article class="stat-card"><div class="stat-icon orange">◉</div><div><span>Learning hours</span><strong>28.5<span class="unit">h</span></strong><small><b>+8.5h</b> this month</small></div><div class="stat-graph graph-3"></div></article>
+          <article class="stat-card"><div class="stat-icon blue">✧</div><div><span>Current streak</span><strong>06<span class="unit">days</span></strong><small>Personal best: <b>14 days</b></small></div><div class="flame">♨</div></article>
+        </section>
+
+        <section class="main-grid">
+          <div class="left-column">
+            <section class="section-heading"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>Continue learning</h2></div><button class="text-button" data-page="My Learning">View all <span>→</span></button></section>
+            <article class="continue-card">
+              <div class="course-art cyber"><span>⌘</span><span>SECURITY<br>FIRST</span></div>
+              <div class="course-info"><div class="course-label">MANDATORY TRAINING <span>•</span> 4H 30M</div><h3>Cyber Security Awareness</h3><p>Understand threats, recognize risks, and protect your organization.</p><div class="progress-line"><span style="width:65%"></span></div><div class="progress-meta"><span>65% complete</span><span>Module 4 of 6</span></div></div>
+              <button class="continue-button" id="continue-button">Continue <span>→</span></button>
+            </article>
+
+            <section class="section-heading recommended-heading"><div><p class="eyebrow">TAILORED FOR YOUR GROWTH</p><h2>Recommended for you</h2></div><button class="text-button" data-page="Explore">Explore catalog <span>→</span></button></section>
+            <div class="course-grid">
+              <article class="course-card"><div class="course-art communication"><span>◌</span></div><div class="card-copy"><div class="tag tag-blue">SOFT SKILLS</div><h3>Strategic Communication</h3><p>Communicate with clarity and influence.</p><div class="card-footer"><span>3h 15m</span><button class="round-arrow" aria-label="Open Strategic Communication">→</button></div></div></article>
+              <article class="course-card"><div class="course-art leadership"><span>♙</span></div><div class="card-copy"><div class="tag tag-orange">LEADERSHIP</div><h3>Leading with Purpose</h3><p>Build teams that do exceptional work.</p><div class="card-footer"><span>5h 40m</span><button class="round-arrow" aria-label="Open Leading with Purpose">→</button></div></div></article>
+            </div>
+          </div>
+
+          <aside class="right-column">
+            <section class="section-heading"><div><p class="eyebrow">YOUR LEARNING RHYTHM</p><h2>Weekly activity</h2></div><button class="dots">•••</button></section>
+            <article class="activity-card"><div class="activity-top"><div><strong>4h 20m</strong><span>this week</span></div><span class="up">↗ 18%</span></div><div class="chart"><div><i style="height:30%"></i><span>M</span></div><div><i style="height:58%"></i><span>T</span></div><div><i style="height:38%"></i><span>W</span></div><div><i style="height:85%"></i><span>T</span></div><div><i style="height:54%"></i><span>F</span></div><div><i class="today-bar" style="height:70%"></i><span>S</span></div><div><i style="height:17%"></i><span>S</span></div></div><p class="chart-note">You're <b>42 minutes</b> ahead of last week.</p></article>
+            <section class="section-heading competency-title"><div><p class="eyebrow">SKILL DEVELOPMENT</p><h2>My competencies</h2></div><button class="text-button" data-page="Competencies">View details <span>→</span></button></section>
+            <article class="competency-card">
+              <div class="donut"><div><strong>72%</strong><span>overall</span></div></div>
+              <div class="skills"><div><p><span>Cyber Security</span><b>82%</b></p><i><em style="width:82%"></em></i></div><div><p><span>Communication</span><b>68%</b></p><i><em style="width:68%"></em></i></div><div><p><span>Leadership</span><b>54%</b></p><i><em style="width:54%"></em></i></div></div>
+            </article>
+          </aside>
+        </section>
+        </div>
+        <section id="dynamic-page" class="app-page" aria-live="polite"></section>
+      </main>
+    </div>
+    <div class="modal-backdrop" id="learning-modal" aria-hidden="true">
+      <article class="lesson-modal" role="dialog" aria-modal="true" aria-label="Course lesson">
+        <button class="modal-close" aria-label="Close lesson">×</button>
+        <div class="lesson-video"><span>⌘</span><button class="play-button">▶</button><small>CYBER SECURITY AWARENESS</small></div>
+        <div class="lesson-body"><span class="lesson-pill">MODULE 4 OF 6</span><h2>Phishing awareness</h2><p>Learn how to spot deceptive messages and protect sensitive organizational information.</p><div class="lesson-progress"><span></span></div><div class="lesson-steps"><p class="done">✓ Introduction <span>Complete</span></p><p class="done">✓ Password safety <span>Complete</span></p><p class="current">● Phishing awareness <span>In progress</span></p><p>○ Data protection <span>Locked</span></p></div><button class="continue-button modal-continue">Mark lesson complete →</button></div>
+      </article>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

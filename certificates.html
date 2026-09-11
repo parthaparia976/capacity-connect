@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates - Capacity Connect</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 25px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 35px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      opacity: 0.9;
+    }
+
+    .certificate {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .certificate-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .certificate-icon {
+      font-size: 50px;
+    }
+
+    .certificate h2 {
+      margin-bottom: 8px;
+    }
+
+    .certificate p {
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 7px 14px;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 11px 20px;
+      background: #4f46e5;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .empty {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      border-radius: 18px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <a href="employee.html" class="back">← Back to Dashboard</a>
+
+    <div class="header">
+      <h1>🏆 My Certificates</h1>
+      <p>View your completed courses and earned certificates.</p>
+    </div>
+
+    <div id="certificates-container">
+      
+      <div class="certificate">
+        <div class="certificate-top">
+          <div>
+            <h2>Capacity Building Fundamentals</h2>
+            <p>
+              Successfully completed the Capacity Building Fundamentals
+              learning course.
+            </p>
+
+            <span class="status">✓ Completed</span>
+
+            <br>
+
+            <a href="#" class="btn"
+               onclick="viewCertificate()">
+  🏆 View Certificate
+</button>
+            </a>
+          </div>
+
+          <div class="certificate-icon">🏆</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const user = JSON.parse(
+      localStorage.getItem("capacityConnectUser") || "null"
+    );
+
+    if (!user) {
+      window.location.replace("login.html");
+    }
+  </script>
+<script>
+function viewCertificate() {
+  alert("🏆 Certificate verified!\n\nCourse: Capacity Building Fundamentals\nStatus: Completed");
+}
+</script>
+</body>
+</html>

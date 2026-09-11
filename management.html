@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Dashboard - Capacity Connect</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6fb;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: #172554;
+      color: white;
+      padding: 25px 16px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 35px;
+    }
+
+    .nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 14px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+    }
+
+    .nav a:hover,
+    .nav .active {
+      background: #2563eb;
+    }
+
+    .main {
+      flex: 1;
+      padding: 35px;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+    }
+
+    .welcome {
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: white;
+      padding: 30px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      color: #374151;
+    }
+
+    .number {
+      font-size: 32px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .section {
+      background: white;
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      Capacity Connect
+    </div>
+
+    <nav class="nav">
+
+      <a href="management.html" class="active">
+        🏠 Dashboard
+      </a>
+
+      <a href="#analytics">
+        📊 Analytics
+      </a>
+
+      <a href="#department">
+        🏢 Department Performance
+      </a>
+
+      <a href="#skills">
+        🎯 Skill Gaps
+      </a>
+
+      <a href="#training">
+        📚 Training Reports
+      </a>
+
+      <a href="#" onclick="logout()">
+        🚪 Logout
+      </a>
+
+    </nav>
+
+  </aside>
+
+  <main class="main">
+
+    <h1>Management Dashboard</h1>
+
+    <div class="welcome">
+      <h2>Management Overview 👋</h2>
+      <p>Monitor organizational learning and training performance.</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Total Employees</h3>
+        <div class="number">0</div>
+      </div>
+
+      <div class="card">
+        <h3>Departments</h3>
+        <div class="number">0</div>
+      </div>
+
+      <div class="card">
+        <h3>Training Programs</h3>
+        <div class="number">0</div>
+      </div>
+
+      <div class="card">
+        <h3>Average Performance</h3>
+        <div class="number">0%</div>
+      </div>
+
+    </div>
+
+    <div class="section" id="analytics">
+      <h2>📊 Analytics</h2>
+      <p style="margin-top:10px;">
+        Organizational learning analytics will appear here.
+      </p>
+    </div>
+
+    <div class="section" id="department">
+      <h2>🏢 Department Performance</h2>
+      <p style="margin-top:10px;">
+        Department-wise performance overview.
+      </p>
+    </div>
+
+    <div class="section" id="skills">
+      <h2>🎯 Skill Gaps</h2>
+      <p style="margin-top:10px;">
+        Skill gap analysis will appear here.
+      </p>
+    </div>
+
+    <div class="section" id="training">
+      <h2>📚 Training Reports</h2>
+      <p style="margin-top:10px;">
+        Training reports will appear here.
+      </p>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+function logout() {
+  localStorage.removeItem("capacityConnectUser");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
