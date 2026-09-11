@@ -46,7 +46,7 @@ async function passwordMatches(password, savedPassword) {
   return crypto.timingSafeEqual(Buffer.from(savedHash, 'hex'), Buffer.from(inputHash, 'hex'));
 }
 
-http.createServer((request, response) => {
+const handler = (request, response) => {
   if (request.method === 'POST' && request.url === '/api/auth/login') {
     readRequestBody(request).then(async userInput => {
       const name = String(userInput.name || '').trim();
@@ -240,6 +240,6 @@ http.createServer((request, response) => {
     response.writeHead(200, { 'Content-Type': contentTypes[path.extname(filePath).toLowerCase()] || 'application/octet-stream' });
     response.end(content);
   });
-}).listen(port, () => {
-  console.log(`Capacity Connect is running at http://localhost:${port}`);
-});
+};
+
+module.exports = handler;
