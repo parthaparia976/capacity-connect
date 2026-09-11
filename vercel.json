@@ -1,13 +1,9 @@
 {
   "version": 2,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/login.html"
-    },
-    {
-      "src": "/(.*)",
-      "continue": true
+      "source": "/",
+      "destination": "/login.html"
     }
   ]
 }
