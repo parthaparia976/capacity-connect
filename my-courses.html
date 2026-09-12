@@ -506,10 +506,191 @@
 
 
 <script>
-  function logout() {
-    localStorage.removeItem("capacityConnectUser");
-    window.location.href = "login.html";
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
+
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
   }
+
+  const profileName =
+    document.querySelector(".profile strong");
+
+  if (profileName) {
+    profileName.textContent =
+      user.name || "Learner";
+  }
+
+  const avatar =
+    document.querySelector(".profile .avatar");
+
+  if (avatar) {
+    avatar.textContent =
+      (user.name || "Learner")
+        .split(" ")
+        .map(x => x[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+  }
+
+  async function loadMyCourses() {
+
+    const courseList =
+      document.getElementById("course-list");
+
+    try {
+
+      const response =
+        await fetch(
+          "/api/enrollments?email=" +
+          encodeURIComponent(user.email)
+        );
+
+      const enrollments =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          enrollments?.error ||
+          "Could not load courses."
+        );
+      }
+
+      if (
+        !Array.isArray(enrollments) ||
+        enrollments.length === 0
+      ) {
+
+        courseList.innerHTML = `
+          <div class="empty">
+
+            <h2>
+              No courses enrolled yet
+            </h2>
+
+            <p>
+              Explore available courses
+              to start learning.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+      courseList.innerHTML =
+        enrollments
+          .map(item => {
+
+            const progress =
+              Math.max(
+                0,
+                Math.min(
+                  100,
+                  Number(item.progress || 0)
+                )
+              );
+
+            const course =
+              item.course || {};
+
+            return `
+              <div class="course-card">
+
+                <div class="course-icon">
+                  🎓
+                </div>
+
+                <h2>
+                  ${
+                    course.title ||
+                    "Learning Course"
+                  }
+                </h2>
+
+                <p>
+                  ${
+                    course.description ||
+                    "Continue your learning journey."
+                  }
+                </p>
+
+                <div class="progress-label">
+
+                  <span>
+                    Progress
+                  </span>
+
+                  <strong>
+                    ${progress}%
+                  </strong>
+
+                </div>
+
+                <div class="progress">
+
+                  <div
+                    class="progress-bar"
+                    style="width:${progress}%"
+                  ></div>
+
+                </div>
+
+                <a
+                  href="learning.html"
+                  class="continue-btn"
+                >
+                  ${
+                    progress > 0
+                      ? "Continue Learning →"
+                      : "Start Learning →"
+                  }
+                </a>
+
+              </div>
+            `;
+          })
+          .join("");
+
+    } catch (error) {
+
+      console.error(
+        "My Courses error:",
+        error
+      );
+
+      courseList.innerHTML = `
+        <div class="empty">
+
+          <h2>
+            Unable to load your courses
+          </h2>
+
+          <p>
+            Please refresh the page and try again.
+          </p>
+
+        </div>
+      `;
+    }
+  }
+
+  function logout() {
+
+    localStorage.removeItem(
+      "capacityConnectUser"
+    );
+
+    window.location.replace(
+      "login.html"
+    );
+  }
+
+  loadMyCourses();
 </script>
 
 </body>
