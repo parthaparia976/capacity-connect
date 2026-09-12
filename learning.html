@@ -288,17 +288,123 @@
   </main>
 
 
-  <script>
+<script>
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
 
-    const user = JSON.parse(
-      localStorage.getItem("capacityConnectUser") || "null"
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
+  }
+
+  const quizAttempts =
+    Number(user.quizAttempts || 0);
+
+  const quizScore =
+    Number(user.quizScore || 0);
+
+  const learningProgress =
+    Number(user.learningProgress || 0);
+
+  const progressNumbers =
+    document.querySelectorAll(
+      ".panel:last-child .number"
     );
 
-    if (!user) {
-      window.location.replace("login.html");
+  const progressBar =
+    document.querySelector(
+      ".panel:last-child .progress-bar"
+    );
+
+  const moduleStatuses =
+    document.querySelectorAll(
+      ".module .status"
+    );
+
+  if (quizAttempts === 0) {
+
+    progressNumbers[0].textContent = "0%";
+    progressNumbers[1].textContent = "0 / 4";
+    progressNumbers[2].textContent = "0h";
+    progressNumbers[3].textContent = "0%";
+
+    if (progressBar) {
+      progressBar.style.width = "0%";
     }
 
-  </script>
+    moduleStatuses.forEach(status => {
+      status.textContent = "Not Started";
+      status.style.background = "#f1f5f9";
+      status.style.color = "#64748b";
+    });
+
+  } else {
+
+    const progress =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          learningProgress || 20
+        )
+      );
+
+    progressNumbers[0].textContent =
+      progress + "%";
+
+    progressNumbers[1].textContent =
+      "0 / 4";
+
+    progressNumbers[2].textContent =
+      "0h";
+
+    progressNumbers[3].textContent =
+      quizScore + "%";
+
+    if (progressBar) {
+      progressBar.style.width =
+        progress + "%";
+    }
+
+    moduleStatuses.forEach(
+      (status, index) => {
+
+        if (index === 3) {
+          status.textContent =
+            "Quiz Completed";
+
+          status.style.background =
+            "#dcfce7";
+
+          status.style.color =
+            "#166534";
+        } else {
+          status.textContent =
+            "Not Started";
+
+          status.style.background =
+            "#f1f5f9";
+
+          status.style.color =
+            "#64748b";
+        }
+      }
+    );
+  }
+
+  const quizButton =
+    document.querySelector(
+      'a[href="quiz.html"]'
+    );
+
+  if (quizButton) {
+    quizButton.textContent =
+      quizAttempts > 0
+        ? "📝 Retake Quiz"
+        : "📝 Take Quiz";
+  }
+</script>
 
 </body>
 </html>

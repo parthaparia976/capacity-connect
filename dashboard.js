@@ -1,3 +1,11 @@
+const currentUser = JSON.parse(
+  localStorage.getItem("capacityConnectUser") || "{}"
+);
+
+if (!currentUser.email) {
+  window.location.replace("login.html");
+  throw new Error("Not authenticated");
+}
 const toast = document.getElementById('toast');
 const dashboard = document.getElementById('dashboard-page');
 const dynamic = document.getElementById('dynamic-page');
@@ -6,7 +14,10 @@ const modal = document.getElementById('learning-modal');
 const currentUser = JSON.parse(
   localStorage.getItem('capacityConnectUser') || '{}'
 );
-
+if (!currentUser.email) {
+  window.location.replace("login.html");
+  throw new Error("Not authenticated");
+}
 async function loadDashboardData() {
   if (!currentUser.email) return;
 
