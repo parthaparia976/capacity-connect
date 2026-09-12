@@ -2701,7 +2701,7 @@
         <div>
 
           <h1>
-            Good morning
+            Welcome..
           </h1>
 
           <p>
@@ -3419,6 +3419,7 @@
       );
 
 
+    /* Latest quiz score */
     const quizScore =
       Math.max(
         0,
@@ -3430,6 +3431,47 @@
           )
         )
       );
+
+    /*
+     * All quiz scores.
+     *
+     * Example:
+     * 50%, 100% -> average = 75%
+     *
+     * Older users who do not yet have quizScores
+     * will fall back to their latest quiz score.
+     */
+    const quizScores =
+      Array.isArray(
+        currentUser.quizScores
+      )
+        ? currentUser.quizScores
+            .map(
+              score =>
+                Math.max(
+                  0,
+                  Math.min(
+                    100,
+                    Number(score || 0)
+                  )
+                )
+            )
+            .filter(
+              score =>
+                Number.isFinite(score)
+            )
+        : [];
+
+    const averageQuizScore =
+      quizScores.length
+        ? Math.round(
+            quizScores.reduce(
+              (sum, score) =>
+                sum + score,
+              0
+            ) / quizScores.length
+          )
+        : quizScore;
 
 
     const quizProgress =
@@ -3972,7 +4014,7 @@
 
 
         scoreEl.textContent =
-          quizScore + "%";
+          averageQuizScore + "%";
 
 
         /*
@@ -3998,7 +4040,7 @@
         quizNote.textContent =
           quizAttempts === 0
             ? "No quiz attempted yet"
-            : `${quizAttempts} quiz attempt${quizAttempts > 1 ? "s" : ""}`;
+            : `${quizAttempts} quiz attempt${quizAttempts > 1 ? "s" : ""} · Average ${averageQuizScore}%`;
 
 
         /*
@@ -4103,7 +4145,7 @@
 
 
         scoreEl.textContent =
-          quizScore + "%";
+          averageQuizScore + "%";
 
 
         renderEmptyCourses();

@@ -978,12 +978,37 @@
          * Save in localStorage.
          */
 
+        const previousScores =
+          Array.isArray(user.quizScores)
+            ? user.quizScores
+            : [];
+
+        const updatedScores = [
+          ...previousScores,
+          score
+        ];
+
+        const averageQuizScore =
+          Math.round(
+            updatedScores.reduce(
+              (sum, item) =>
+                sum + Number(item || 0),
+              0
+            ) / updatedScores.length
+          );
+
         const updatedUser = {
 
           ...user,
 
           quizScore:
             score,
+
+          quizScores:
+            updatedScores,
+
+          quizAverage:
+            averageQuizScore,
 
           quizAttempts:
             newAttempt,
@@ -1017,6 +1042,12 @@
 
         user.quizScore =
           score;
+
+        user.quizScores =
+          updatedScores;
+
+        user.quizAverage =
+          averageQuizScore;
 
         user.learningProgress =
           newProgress;
