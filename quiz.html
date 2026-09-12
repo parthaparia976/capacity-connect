@@ -296,102 +296,181 @@
   </main>
 
 
-  <script>
+<script>
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
 
-    const user = JSON.parse(
-      localStorage.getItem("capacityConnectUser") || "null"
-    );
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
+  }
 
-    if (!user) {
-      window.location.replace("login.html");
-    }
+  const quizForm =
+    document.getElementById("quiz-form");
 
+  quizForm.addEventListener(
+    "submit",
+    async function (event) {
 
-    document
-      .getElementById("quiz-form")
-      .addEventListener("submit", async function(event) {
+      event.preventDefault();
 
-        event.preventDefault();
+      const answers = {
+        q1: "b",
+        q2: "a",
+        q3: "b",
+        q4: "a"
+      };
 
-        const answers = {
-          q1: "b",
-          q2: "a",
-          q3: "b",
-          q4: "a"
-        };
+      let correct = 0;
 
-        let correct = 0;
+      for (const question in answers) {
 
-        for (const question in answers) {
-
-          const selected = document.querySelector(
+        const selected =
+          document.querySelector(
             `input[name="${question}"]:checked`
           );
 
-          if (selected && selected.value === answers[question]) {
-            correct++;
-          }
+        if (
+          selected &&
+          selected.value === answers[question]
+        ) {
+          correct++;
+        }
+      }
+
+      const score =
+        Math.round(
+          (correct / 4) * 100
+        );
+
+      /*
+       * Quiz submit হলে minimum learning
+       * progress 20% হবে.
+       *
+       * Course enrollment বাড়বে না.
+       */
+
+      const progressAfterQuiz = 20;
+
+      document.getElementById("score")
+        .textContent = score + "%";
+
+      const message =
+        document.getElementById(
+          "result-message"
+        );
+
+      if (score >= 70) {
+
+        message.textContent =
+          "Congratulations! You passed the quiz.";
+
+        message.className =
+          "passed";
+
+      } else {
+
+        message.textContent =
+          "You did not reach the passing mark. Keep learning and try again.";
+
+        message.className =
+          "failed";
+      }
+
+      quizForm.style.display =
+        "none";
+
+      document.getElementById("result")
+        .style.display = "block";
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/quiz-results",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+
+                email:
+                  user.email,
+
+                score:
+
+                  score,
+
+                progress:
+                  progressAfterQuiz,
+
+                /*
+                 * This is a quiz attempt.
+                 * It does NOT mean the user
+                 * enrolled in a course.
+                 */
+                attemptOnly: true
+              })
+            }
+          );
+
+        const result =
+          await response.json();
+
+        if (!response.ok) {
+
+          console.error(
+            "Quiz save error:",
+            result
+          );
+
+          return;
         }
 
-        const score = Math.round((correct / 4) * 100);
+        /*
+         * Keep the current dashboard
+         * user data intact.
+         */
 
-        document.getElementById("score").textContent =
-          score + "%";
+        localStorage.setItem(
+          "capacityConnectUser",
+          JSON.stringify({
+            ...user,
 
-        const message =
-          document.getElementById("result-message");
+            quizScore:
+              score,
 
-        if (score >= 70) {
+            quizAttempts:
+              (Number(
+                user.quizAttempts
+              ) || 0) + 1,
 
-          message.textContent =
-            "Congratulations! You passed the quiz.";
+            learningProgress:
+              Math.max(
+                Number(
+                  user.learningProgress
+                ) || 0,
+                progressAfterQuiz
+              )
+          })
+        );
 
-          message.className = "passed";
+      } catch (error) {
 
-        } else {
+        console.error(
+          "Quiz result could not be saved:",
+          error
+        );
+      }
 
-          message.textContent =
-            "You did not reach the passing mark. Keep learning and try again.";
-
-          message.className = "failed";
-
-        }
-
-
-        document.getElementById("quiz-form").style.display = "none";
-
-        document.getElementById("result").style.display = "block";
-
-
-        try {
-
-          await fetch("/api/quiz-results", {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-              userId: user.id,
-              courseId: "demo-course",
-              score: score
-
-            })
-
-          });
-
-        } catch (error) {
-
-          console.log("Quiz result could not be saved:", error);
-
-        }
-
-      });
-
-  </script>
+    }
+  );
+</script>
 
 </body>
 </html>
