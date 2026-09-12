@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>My Courses | Capacity Connect</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,7 +21,11 @@
     }
 
     body {
-      font-family: Inter, Arial, sans-serif;
+      font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
       background: #f6f8f5;
       color: #172b34;
     }
@@ -23,13 +35,19 @@
       min-height: 100vh;
     }
 
-    /* SIDEBAR */
+    /* =========================
+       SIDEBAR
+    ========================= */
+
     .sidebar {
       width: 250px;
       background: #102027;
       color: white;
+
       padding: 28px 18px;
+
       position: fixed;
+
       top: 0;
       bottom: 0;
       left: 0;
@@ -38,19 +56,26 @@
     .brand {
       display: flex;
       align-items: center;
+
       gap: 12px;
+
       padding: 0 10px;
+
       margin-bottom: 45px;
     }
 
     .brand-icon {
       width: 40px;
       height: 40px;
+
       border-radius: 12px;
+
       background: #079455;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-weight: 800;
       font-size: 20px;
     }
@@ -62,29 +87,69 @@
 
     .brand-text strong {
       display: block;
+
       font-size: 15px;
+
       letter-spacing: 1.5px;
     }
 
     .nav-title {
       font-size: 11px;
+
       color: #8da09b;
+
       margin: 0 12px 12px;
+
       text-transform: uppercase;
+
       letter-spacing: 1.5px;
     }
 
     .nav-item {
       display: flex;
       align-items: center;
+
       gap: 12px;
+
       color: #b9c7c3;
+
       text-decoration: none;
+
       padding: 13px 14px;
+
       border-radius: 12px;
+
       margin-bottom: 5px;
+
       font-size: 14px;
+
       transition: .2s;
+    }
+
+    /*
+     * IMPORTANT:
+     * Keep all sidebar SVG icons small.
+     */
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+
+      flex: 0 0 20px;
+
+      fill: none !important;
+
+      stroke: currentColor !important;
+
+      stroke-width: 1.8;
+
+      stroke-linecap: round;
+
+      stroke-linejoin: round;
+    }
+
+    .nav-item svg * {
+      fill: none !important;
+      stroke: currentColor !important;
     }
 
     .nav-item:hover,
@@ -95,66 +160,101 @@
 
     .logout {
       position: absolute;
+
       bottom: 25px;
+
       left: 18px;
       right: 18px;
     }
 
-    /* MAIN */
+    /* =========================
+       MAIN
+    ========================= */
+
     .main {
       margin-left: 250px;
+
       width: calc(100% - 250px);
+
       padding: 38px 45px;
     }
 
     .topbar {
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
+
       margin-bottom: 35px;
     }
 
     .topbar h1 {
       font-size: 35px;
+
       letter-spacing: -1.5px;
     }
 
     .topbar p {
       margin-top: 8px;
+
       color: #71817d;
     }
 
     .profile {
       background: white;
+
       padding: 9px 15px;
+
       border-radius: 50px;
+
       display: flex;
+
       align-items: center;
+
       gap: 10px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,.05);
     }
 
     .avatar {
       width: 38px;
       height: 38px;
+
       border-radius: 50%;
+
       background: #dff4e9;
+
       color: #079455;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       font-weight: bold;
     }
 
-    /* FILTER */
+    /* =========================
+       FILTER
+    ========================= */
+
     .filter-bar {
       background: white;
+
       border: 1px solid #e3e9e5;
+
       padding: 15px;
+
       border-radius: 17px;
+
       margin-bottom: 25px;
+
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
     }
 
@@ -164,89 +264,138 @@
 
     .filter {
       padding: 10px 15px;
+
       border: 1px solid #dce5e1;
+
       border-radius: 10px;
+
       background: white;
+
       color: #172b34;
     }
 
-    /* COURSES */
+    /* =========================
+       COURSES
+    ========================= */
+
     .courses {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 20px;
     }
 
     .course-card {
       background: white;
+
       border: 1px solid #e3e9e5;
+
       border-radius: 22px;
+
       padding: 25px;
+
       transition: .25s;
     }
 
     .course-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,.07);
+
+      box-shadow:
+        0 15px 35px rgba(0,0,0,.07);
     }
 
     .course-icon {
       width: 50px;
       height: 50px;
+
       border-radius: 15px;
+
       background: #e6f6ee;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       font-size: 22px;
+
       margin-bottom: 20px;
     }
 
     .course-card h2 {
       font-size: 19px;
+
       margin-bottom: 10px;
     }
 
     .course-card p {
       color: #71817d;
+
       font-size: 13px;
+
       line-height: 1.6;
+
       min-height: 45px;
     }
 
     .progress-label {
       display: flex;
+
       justify-content: space-between;
+
       margin-top: 22px;
+
       font-size: 12px;
+
       color: #71817d;
     }
 
     .progress {
       height: 7px;
+
       background: #e9eeeb;
+
       border-radius: 10px;
+
       margin-top: 8px;
+
       overflow: hidden;
     }
 
     .progress-bar {
       height: 100%;
-      width: 65%;
+
+      width: 0%;
+
       background: #079455;
+
       border-radius: 10px;
+
+      transition:
+        width .3s ease;
     }
 
     .continue-btn {
       display: block;
+
       text-align: center;
+
       margin-top: 20px;
+
       padding: 11px;
+
       background: #102027;
+
       color: white;
+
       text-decoration: none;
+
       border-radius: 11px;
+
       font-size: 13px;
+
       font-weight: 600;
     }
 
@@ -256,20 +405,33 @@
 
     .empty {
       background: white;
+
       padding: 50px;
+
       border-radius: 20px;
+
       text-align: center;
+
       color: #71817d;
+
       grid-column: 1 / -1;
     }
 
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 1000px) {
+
       .courses {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
+
     }
 
     @media (max-width: 700px) {
+
       .sidebar {
         width: 75px;
       }
@@ -282,416 +444,850 @@
 
       .main {
         margin-left: 75px;
+
         width: calc(100% - 75px);
+
         padding: 25px;
       }
 
       .courses {
         grid-template-columns: 1fr;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-<div class="app">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <div class="brand">
-      <div class="brand-icon">C</div>
-
-      <div class="brand-text">
-        CAPACITY
-        <strong>CONNECT</strong>
-      </div>
-    </div>
-
-    <div class="nav-title">Workspace</div>
-
-    <a href="employee.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <path d="M3 10.5 12 3l9 7.5"></path>
-    <path d="M5 9.5V21h14V9.5"></path>
-    <path d="M9 21v-7h6v7"></path>
-  </svg>
-  <span>Dashboard</span>
-</a>
-   <a href="my-courses.html" class="nav-item active">
-  <svg viewBox="0 0 24 24">
-    <path d="M4 5h16v14H4z"></path>
-    <path d="M8 5v14M4 9h16"></path>
-  </svg>
-  <span>My Courses</span>
-</a>
-
-    <a href="learning.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <path d="M4 5h16v14H4z"></path>
-    <path d="m8 9 4-2 4 2-4 2z"></path>
-    <path d="M8 13h8M8 16h5"></path>
-  </svg>
-  <span>Learning</span>
-</a>
-
-    <a href="quiz.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <rect x="5" y="3" width="14" height="18" rx="2"></rect>
-    <path d="M8 7h8"></path>
-    <path d="M8 11h5"></path>
-    <path d="M8 15h8"></path>
-    <path d="m15 11 1 1 2-2"></path>
-  </svg>
-  <span>Quiz</span>
-</a>
-
-   <a href="progress.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <path d="M4 19V5"></path>
-    <path d="M4 19h16"></path>
-    <path d="m7 15 4-4 3 2 5-6"></path>
-  </svg>
-  <span>Progress</span>
-</a>
-   <a href="competency.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="8"></circle>
-    <circle cx="12" cy="12" r="4"></circle>
-    <circle cx="12" cy="12" r="1"></circle>
-  </svg>
-  <span>Competency</span>
-</a>
-    <a href="recommendations.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <path d="M9 18h6"></path>
-    <path d="M10 21h4"></path>
-    <path d="M8 14a6 6 0 1 1 8 0c-1 1-2 2-2 4h-4c0-2-1-3-2-4z"></path>
-  </svg>
-  <span>Recommendations</span>
-</a>
-   <a href="certificates.html" class="nav-item">
-  <svg viewBox="0 0 24 24">
-    <path d="M6 3h12v14H6z"></path>
-    <path d="M9 7h6M9 10h6"></path>
-    <circle cx="12" cy="15" r="2"></circle>
-    <path d="m10 17-1 4 3-2 3 2-1-4"></path>
-  </svg>
-  <span>Certificates</span>
-</a>
-    <a href="#" class="nav-item logout" onclick="logout()">
-      🚪 <span>Logout</span>
-    </a>
-
-  </aside>
+  <div class="app">
 
 
-  <!-- MAIN -->
-  <main class="main">
+    <!-- SIDEBAR -->
 
-    <div class="topbar">
+    <aside class="sidebar">
 
-      <div>
-        <h1>My Courses</h1>
-        <p>Explore your enrolled courses and continue learning.</p>
-      </div>
+      <div class="brand">
 
-      <div class="profile">
-        <div class="avatar">A</div>
-        <strong>Learner</strong>
-      </div>
-
-    </div>
-
-
-    <div class="filter-bar">
-      <div class="filter-title">
-        Your Learning Space
-      </div>
-
-      <select class="filter">
-        <option>All Courses</option>
-        <option>In Progress</option>
-        <option>Completed</option>
-      </select>
-    </div>
-
-
-    <!-- COURSE LIST -->
-    <div class="courses" id="course-list">
-
-      <div class="course-card">
-
-        <div class="course-icon">🎓</div>
-
-        <h2>Capacity Building Fundamentals</h2>
-
-        <p>
-          Learn the fundamentals of professional capacity development.
-        </p>
-
-        <div class="progress-label">
-          <span>Progress</span>
-          <strong>65%</strong>
+        <div class="brand-icon">
+          C
         </div>
 
-        <div class="progress">
-          <div class="progress-bar"></div>
+        <div class="brand-text">
+          CAPACITY
+          <strong>CONNECT</strong>
         </div>
-
-        <a href="learning.html" class="continue-btn">
-          Continue Learning →
-        </a>
 
       </div>
 
 
-      <div class="course-card">
+      <div class="nav-title">
+        Workspace
+      </div>
 
-        <div class="course-icon">💼</div>
 
-        <h2>Project Management</h2>
+      <!-- Dashboard -->
 
-        <p>
-          Improve planning, teamwork and project management skills.
-        </p>
+      <a
+        href="employee.html"
+        class="nav-item"
+      >
 
-        <div class="progress-label">
-          <span>Progress</span>
-          <strong>40%</strong>
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M3 10.5 12 3l9 7.5"
+          ></path>
+
+          <path
+            d="M5 9.5V21h14V9.5"
+          ></path>
+
+          <path
+            d="M9 21v-7h6v7"
+          ></path>
+
+        </svg>
+
+        <span>
+          Dashboard
+        </span>
+
+      </a>
+
+
+      <!-- My Courses -->
+
+      <a
+        href="my-courses.html"
+        class="nav-item active"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M4 5h16v14H4z"
+          ></path>
+
+          <path
+            d="M8 5v14"
+          ></path>
+
+          <path
+            d="M4 9h16"
+          ></path>
+
+        </svg>
+
+        <span>
+          My Courses
+        </span>
+
+      </a>
+
+
+      <!-- Learning -->
+
+      <a
+        href="learning.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M4 5h16v14H4z"
+          ></path>
+
+          <path
+            d="m8 9 4-2 4 2-4 2z"
+          ></path>
+
+          <path
+            d="M8 13h8M8 16h5"
+          ></path>
+
+        </svg>
+
+        <span>
+          Learning
+        </span>
+
+      </a>
+
+
+      <!-- Quiz -->
+
+      <a
+        href="quiz.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <rect
+            x="5"
+            y="3"
+            width="14"
+            height="18"
+            rx="2"
+          ></rect>
+
+          <path
+            d="M8 7h8"
+          ></path>
+
+          <path
+            d="M8 11h5"
+          ></path>
+
+          <path
+            d="M8 15h8"
+          ></path>
+
+          <path
+            d="m15 11 1 1 2-2"
+          ></path>
+
+        </svg>
+
+        <span>
+          Quiz
+        </span>
+
+      </a>
+
+
+      <!-- Progress -->
+
+      <a
+        href="progress.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M4 19V5"
+          ></path>
+
+          <path
+            d="M4 19h16"
+          ></path>
+
+          <path
+            d="m7 15 4-4 3 2 5-6"
+          ></path>
+
+        </svg>
+
+        <span>
+          Progress
+        </span>
+
+      </a>
+
+
+      <!-- Competency -->
+
+      <a
+        href="competency.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <circle
+            cx="12"
+            cy="12"
+            r="8"
+          ></circle>
+
+          <circle
+            cx="12"
+            cy="12"
+            r="4"
+          ></circle>
+
+          <circle
+            cx="12"
+            cy="12"
+            r="1"
+          ></circle>
+
+        </svg>
+
+        <span>
+          Competency
+        </span>
+
+      </a>
+
+
+      <!-- Recommendations -->
+
+      <a
+        href="recommendations.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M9 18h6"
+          ></path>
+
+          <path
+            d="M10 21h4"
+          ></path>
+
+          <path
+            d="M8 14a6 6 0 1 1 8 0c-1 1-2 2-2 4h-4c0-2-1-3-2-4z"
+          ></path>
+
+        </svg>
+
+        <span>
+          Recommendations
+        </span>
+
+      </a>
+
+
+      <!-- Certificates -->
+
+      <a
+        href="certificates.html"
+        class="nav-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path
+            d="M6 3h12v14H6z"
+          ></path>
+
+          <path
+            d="M9 7h6M9 10h6"
+          ></path>
+
+          <circle
+            cx="12"
+            cy="15"
+            r="2"
+          ></circle>
+
+          <path
+            d="m10 17-1 4 3-2 3 2-1-4"
+          ></path>
+
+        </svg>
+
+        <span>
+          Certificates
+        </span>
+
+      </a>
+
+
+      <!-- Logout -->
+
+      <a
+        href="#"
+        class="nav-item logout"
+        onclick="logout()"
+      >
+
+        <span>
+          🚪 Logout
+        </span>
+
+      </a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+      <div class="topbar">
+
+        <div>
+
+          <h1>
+            My Courses
+          </h1>
+
+          <p>
+            Explore your enrolled courses
+            and continue learning.
+          </p>
+
         </div>
 
-        <div class="progress">
-          <div class="progress-bar" style="width:40%"></div>
-        </div>
 
-        <a href="learning.html" class="continue-btn">
-          Continue Learning →
-        </a>
+        <div class="profile">
+
+          <div class="avatar">
+            L
+          </div>
+
+          <strong>
+            Learner
+          </strong>
+
+        </div>
 
       </div>
 
 
-      <div class="course-card">
+      <div class="filter-bar">
 
-        <div class="course-icon">🧠</div>
-
-        <h2>Problem Solving</h2>
-
-        <p>
-          Develop structured thinking and practical problem-solving skills.
-        </p>
-
-        <div class="progress-label">
-          <span>Progress</span>
-          <strong>25%</strong>
+        <div class="filter-title">
+          Your Learning Space
         </div>
 
-        <div class="progress">
-          <div class="progress-bar" style="width:25%"></div>
-        </div>
+        <select class="filter">
 
-        <a href="learning.html" class="continue-btn">
-          Continue Learning →
-        </a>
+          <option>
+            All Courses
+          </option>
+
+          <option>
+            In Progress
+          </option>
+
+          <option>
+            Completed
+          </option>
+
+        </select>
 
       </div>
 
-    </div>
 
-  </main>
+      <!-- COURSE LIST -->
 
-</div>
+      <div
+        class="courses"
+        id="course-list"
+      >
 
 
-<script>
-  const user = JSON.parse(
-    localStorage.getItem("capacityConnectUser") || "null"
-  );
+        <!-- Course 1 -->
 
-  if (!user || !user.email) {
-    window.location.replace("login.html");
-    throw new Error("User is not logged in");
-  }
+        <div
+          class="course-card"
+          data-course-key="capacity"
+        >
 
-  const profileName =
-    document.querySelector(".profile strong");
+          <div class="course-icon">
+            🎓
+          </div>
 
-  if (profileName) {
-    profileName.textContent =
-      user.name || "Learner";
-  }
+          <h2>
+            Capacity Building Fundamentals
+          </h2>
 
-  const avatar =
-    document.querySelector(".profile .avatar");
+          <p>
+            Learn the fundamentals of
+            professional capacity development.
+          </p>
 
-  if (avatar) {
-    avatar.textContent =
-      (user.name || "Learner")
-        .split(" ")
-        .map(x => x[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase();
-  }
+          <div class="progress-label">
 
-  async function loadMyCourses() {
+            <span>
+              Progress
+            </span>
 
-    const courseList =
-      document.getElementById("course-list");
-
-    try {
-
-      const response =
-        await fetch(
-          "/api/enrollments?email=" +
-          encodeURIComponent(user.email)
-        );
-
-      const enrollments =
-        await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          enrollments?.error ||
-          "Could not load courses."
-        );
-      }
-
-      if (
-        !Array.isArray(enrollments) ||
-        enrollments.length === 0
-      ) {
-
-        courseList.innerHTML = `
-          <div class="empty">
-
-            <h2>
-              No courses enrolled yet
-            </h2>
-
-            <p>
-              Explore available courses
-              to start learning.
-            </p>
+            <strong class="course-percent">
+              0%
+            </strong>
 
           </div>
-        `;
 
-        return;
-      }
+          <div class="progress">
 
-      courseList.innerHTML =
-        enrollments
-          .map(item => {
+            <div
+              class="progress-bar"
+              style="width:0%"
+            ></div>
+
+          </div>
+
+          <a
+            href="learning.html"
+            class="continue-btn"
+          >
+            Start Learning →
+          </a>
+
+        </div>
+
+
+        <!-- Course 2 -->
+
+        <div
+          class="course-card"
+          data-course-key="project"
+        >
+
+          <div class="course-icon">
+            💼
+          </div>
+
+          <h2>
+            Project Management
+          </h2>
+
+          <p>
+            Improve planning, teamwork and
+            project management skills.
+          </p>
+
+          <div class="progress-label">
+
+            <span>
+              Progress
+            </span>
+
+            <strong class="course-percent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              style="width:0%"
+            ></div>
+
+          </div>
+
+          <a
+            href="learning.html"
+            class="continue-btn"
+          >
+            Start Learning →
+          </a>
+
+        </div>
+
+
+        <!-- Course 3 -->
+
+        <div
+          class="course-card"
+          data-course-key="problem"
+        >
+
+          <div class="course-icon">
+            🧠
+          </div>
+
+          <h2>
+            Problem Solving
+          </h2>
+
+          <p>
+            Develop structured thinking and
+            practical problem-solving skills.
+          </p>
+
+          <div class="progress-label">
+
+            <span>
+              Progress
+            </span>
+
+            <strong class="course-percent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              style="width:0%"
+            ></div>
+
+          </div>
+
+          <a
+            href="learning.html"
+            class="continue-btn"
+          >
+            Start Learning →
+          </a>
+
+        </div>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script>
+
+    const user = JSON.parse(
+      localStorage.getItem(
+        "capacityConnectUser"
+      ) || "null"
+    );
+
+
+    if (!user || !user.email) {
+
+      window.location.replace(
+        "login.html"
+      );
+
+      throw new Error(
+        "User is not logged in"
+      );
+    }
+
+
+    /*
+     * USER NAME
+     */
+
+    const profileName =
+      document.querySelector(
+        ".profile strong"
+      );
+
+    if (profileName) {
+
+      profileName.textContent =
+        user.name || "Learner";
+
+    }
+
+
+    /*
+     * USER INITIALS
+     */
+
+    const avatar =
+      document.querySelector(
+        ".profile .avatar"
+      );
+
+    if (avatar) {
+
+      avatar.textContent =
+        (user.name || "Learner")
+          .split(" ")
+          .map(
+            part => part[0]
+          )
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+
+    }
+
+
+    /*
+     * Apply actual enrollment progress
+     * over the default 0% cards.
+     */
+
+    async function loadMyCourses() {
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/enrollments?email=" +
+            encodeURIComponent(
+              user.email
+            )
+          );
+
+
+        const enrollments =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Enrollment API error:",
+            enrollments
+          );
+
+          return;
+        }
+
+
+        if (
+          !Array.isArray(
+            enrollments
+          )
+        ) {
+          return;
+        }
+
+
+        const cards =
+          document.querySelectorAll(
+            ".course-card"
+          );
+
+
+        enrollments.forEach(
+          enrollment => {
+
+            const course =
+              enrollment.course || {};
+
+
+            const title =
+              String(
+                course.title || ""
+              ).toLowerCase();
+
+
+            let card = null;
+
+
+            /*
+             * Match API course with
+             * the displayed course.
+             */
+
+            if (
+              title.includes(
+                "capacity"
+              ) ||
+              title.includes(
+                "fundamental"
+              )
+            ) {
+
+              card =
+                document.querySelector(
+                  '[data-course-key="capacity"]'
+                );
+
+            } else if (
+              title.includes(
+                "project"
+              )
+            ) {
+
+              card =
+                document.querySelector(
+                  '[data-course-key="project"]'
+                );
+
+            } else if (
+              title.includes(
+                "problem"
+              )
+            ) {
+
+              card =
+                document.querySelector(
+                  '[data-course-key="problem"]'
+                );
+
+            }
+
+
+            /*
+             * Fallback:
+             * match first unused card.
+             */
+
+            if (!card) {
+
+              card =
+                Array.from(cards)
+                  .find(
+                    item =>
+                      !item.dataset.loaded
+                  );
+
+            }
+
+
+            if (!card) {
+              return;
+            }
+
+
+            card.dataset.loaded =
+              "true";
+
 
             const progress =
               Math.max(
                 0,
                 Math.min(
                   100,
-                  Number(item.progress || 0)
+                  Number(
+                    enrollment.progress ||
+                    0
+                  )
                 )
               );
 
-            const course =
-              item.course || {};
 
-            return `
-              <div class="course-card">
+            const percent =
+              card.querySelector(
+                ".course-percent"
+              );
 
-                <div class="course-icon">
-                  🎓
-                </div>
 
-                <h2>
-                  ${
-                    course.title ||
-                    "Learning Course"
-                  }
-                </h2>
+            const bar =
+              card.querySelector(
+                ".progress-bar"
+              );
 
-                <p>
-                  ${
-                    course.description ||
-                    "Continue your learning journey."
-                  }
-                </p>
 
-                <div class="progress-label">
+            const button =
+              card.querySelector(
+                ".continue-btn"
+              );
 
-                  <span>
-                    Progress
-                  </span>
 
-                  <strong>
-                    ${progress}%
-                  </strong>
+            if (percent) {
 
-                </div>
+              percent.textContent =
+                progress + "%";
 
-                <div class="progress">
+            }
 
-                  <div
-                    class="progress-bar"
-                    style="width:${progress}%"
-                  ></div>
 
-                </div>
+            if (bar) {
 
-                <a
-                  href="learning.html"
-                  class="continue-btn"
-                >
-                  ${
-                    progress > 0
-                      ? "Continue Learning →"
-                      : "Start Learning →"
-                  }
-                </a>
+              bar.style.width =
+                progress + "%";
 
-              </div>
-            `;
-          })
-          .join("");
+            }
 
-    } catch (error) {
 
-      console.error(
-        "My Courses error:",
-        error
+            if (button) {
+
+              button.textContent =
+                progress > 0
+                  ? "Continue Learning →"
+                  : "Start Learning →";
+
+            }
+
+          }
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "My Courses error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /*
+     * LOGOUT
+     */
+
+    function logout() {
+
+      localStorage.removeItem(
+        "capacityConnectUser"
       );
 
-      courseList.innerHTML = `
-        <div class="empty">
+      window.location.replace(
+        "login.html"
+      );
 
-          <h2>
-            Unable to load your courses
-          </h2>
-
-          <p>
-            Please refresh the page and try again.
-          </p>
-
-        </div>
-      `;
     }
-  }
 
-  function logout() {
 
-    localStorage.removeItem(
-      "capacityConnectUser"
-    );
+    loadMyCourses();
 
-    window.location.replace(
-      "login.html"
-    );
-  }
-
-  loadMyCourses();
-</script>
+  </script>
 
 </body>
+
 </html>
