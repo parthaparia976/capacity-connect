@@ -556,6 +556,9 @@
 
   async function loadLearnerDashboard() {
     try {
+      /*
+       * LOAD REAL COURSE ENROLLMENTS
+       */
       const response = await fetch(
         "/api/enrollments?email=" +
         encodeURIComponent(currentUser.email)
@@ -572,7 +575,7 @@
       }
 
       /*
-       * REAL DASHBOARD STATS
+       * COURSE COUNTS
        */
 
       const enrolledCount =
@@ -580,19 +583,56 @@
 
       const completedCount =
         enrollments.filter(
-          item => Number(item.progress) >= 100
+          item =>
+            Number(item.progress || 0) >= 100
         ).length;
 
-      const totalProgress =
+      /*
+       * COURSE PROGRESS
+       */
+
+      const courseProgress =
         enrollments.length
           ? Math.round(
               enrollments.reduce(
                 (sum, item) =>
-                  sum + Number(item.progress || 0),
+                  sum +
+                  Number(item.progress || 0),
                 0
               ) / enrollments.length
             )
           : 0;
+
+      /*
+       * QUIZ-BASED PROGRESS
+       *
+       * quiz.html saves this after
+       * submitting the quiz.
+       */
+
+      const quizProgress =
+        Number(
+          currentUser.learningProgress || 0
+        );
+
+      const totalProgress =
+        Math.max(
+          courseProgress,
+          quizProgress
+        );
+
+      /*
+       * ACTUAL QUIZ SCORE
+       */
+
+      const quizScore =
+        Number(
+          currentUser.quizScore || 0
+        );
+
+      /*
+       * UPDATE DASHBOARD STATS
+       */
 
       statValues[0].textContent =
         enrolledCount;
@@ -603,29 +643,28 @@
       statValues[2].textContent =
         totalProgress + "%";
 
-      /*
-       * Quiz score এখন 0 থাকবে।
-       * Quiz API connect করার পরে
-       * এটাও real data হবে।
-       */
-
       statValues[3].textContent =
-        "0%";
+        quizScore + "%";
 
       /*
        * PROFILE
        */
 
       const profileName =
-        document.querySelector(".profile strong");
+        document.querySelector(
+          ".profile strong"
+        );
 
       if (profileName) {
         profileName.textContent =
-          currentUser.name || "Learner";
+          currentUser.name ||
+          "Learner";
       }
 
       const avatar =
-        document.querySelector(".profile .avatar");
+        document.querySelector(
+          ".profile .avatar"
+        );
 
       if (avatar) {
         avatar.textContent =
@@ -645,13 +684,18 @@
 
         courseList.innerHTML = `
           <div class="course">
-            <div class="course-icon">+</div>
 
-            <h3>No courses enrolled</h3>
+            <div class="course-icon">
+              +
+            </div>
+
+            <h3>
+              No courses enrolled
+            </h3>
 
             <p>
-              Explore available courses and start
-              your learning journey.
+              Explore available courses and
+              start your learning journey.
             </p>
 
             <div class="progress">
@@ -662,8 +706,13 @@
             </div>
 
             <div class="course-footer">
-              <span>0% completed</span>
-              <span>0h</span>
+              <span>
+                0% completed
+              </span>
+
+              <span>
+                0h
+              </span>
             </div>
 
             <a
@@ -672,6 +721,7 @@
             >
               Explore Courses →
             </a>
+
           </div>
         `;
 
@@ -687,7 +737,9 @@
                 0,
                 Math.min(
                   100,
-                  Number(item.progress || 0)
+                  Number(
+                    item.progress || 0
+                  )
                 )
               );
 
@@ -726,12 +778,10 @@
                 </p>
 
                 <div class="progress">
-
                   <div
                     class="progress-bar"
                     style="width:${progress}%"
                   ></div>
-
                 </div>
 
                 <div class="course-footer">
@@ -774,18 +824,25 @@
       );
 
       /*
-       * Keep a clean zero state if
-       * data cannot be loaded.
+       * Safe initial state
        */
 
       statValues[0].textContent = "0";
       statValues[1].textContent = "0";
-      statValues[2].textContent = "0%";
-      statValues[3].textContent = "0%";
+      statValues[2].textContent =
+        Number(
+          currentUser.learningProgress || 0
+        ) + "%";
+
+      statValues[3].textContent =
+        Number(
+          currentUser.quizScore || 0
+        ) + "%";
     }
   }
 
   function logout() {
+
     localStorage.removeItem(
       "capacityConnectUser"
     );
