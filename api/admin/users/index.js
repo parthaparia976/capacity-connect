@@ -3,7 +3,6 @@ async function supabaseRequest(path, options = {}) {
     `${process.env.SUPABASE_URL}/rest/v1/${path}`,
     {
       method: options.method || "GET",
-
       headers: {
         apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
         Authorization:
@@ -11,7 +10,6 @@ async function supabaseRequest(path, options = {}) {
         "Content-Type": "application/json",
         Prefer: "return=representation"
       },
-
       body:
         options.body === undefined
           ? undefined
@@ -44,7 +42,7 @@ async function supabaseRequest(path, options = {}) {
 
 async function getUserByEmail(email) {
   const users = await supabaseRequest(
-    `users?email=eq.${encodeURIComponent(email)}&select=*`
+    `users?email=eq.${encodeURIComponent(email)}&select=id,name,email,role,status`
   );
 
   return users?.[0] || null;
@@ -52,6 +50,7 @@ async function getUserByEmail(email) {
 
 module.exports = async function handler(req, res) {
   try {
+
     if (req.method !== "GET") {
       return res.status(405).json({
         error: "Method not allowed"
@@ -86,51 +85,13 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const users =
-      await supabaseRequest(
-        "users?select=id,name,email,role,status,joined_at,progress&order=joined_at.desc"
-      );
+    const users = await supabaseRequest(
+      "users?select=id,name,email,role,status&order=id.desc"
+    );
 
-    const result = [];
-
-    for (const user of users || []) {
-
-      const enrollments =
-        await supabaseRequest(
-          `enrollments?user_id=eq.${user.id}&select=id,course_id,progress,enrolled_at,completed_at`
-        );
-
-      const quizResults =
-        await supabaseRequest(
-          `quiz_results?user_id=eq.${user.id}&select=id,course_id,score,total_questions,passed,taken_at`
-        );
-
-      const certificates =
-        await supabaseRequest(
-          `certificates?user_id=eq.${user.id}&select=id,course_id,certificate_name,issued_at`
-        );
-
-      result.push({
-        ...user,
-
-        courses:
-          enrollments?.length || 0,
-
-        progress:
-          Number(user.progress || 0),
-
-        enrollments:
-          enrollments || [],
-
-        quizResults:
-          quizResults || [],
-
-        certificates:
-          certificates || []
-      });
-    }
-
-    return res.status(200).json(result);
+    return res.status(200).json(
+      users || []
+    );
 
   } catch (error) {
 
