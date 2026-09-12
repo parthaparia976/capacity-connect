@@ -36,6 +36,7 @@ async function supabaseRequest(path, options = {}) {
     `${process.env.SUPABASE_URL}/rest/v1/${path}`,
     {
       method: options.method || "GET",
+
       headers: {
         apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
         Authorization:
@@ -43,6 +44,7 @@ async function supabaseRequest(path, options = {}) {
         "Content-Type": "application/json",
         Prefer: "return=representation"
       },
+
       body:
         options.body === undefined
           ? undefined
@@ -57,7 +59,9 @@ async function supabaseRequest(path, options = {}) {
   try {
     data = text ? JSON.parse(text) : null;
   } catch {
-    data = { error: text };
+    data = {
+      error: text
+    };
   }
 
   if (!response.ok) {
@@ -81,6 +85,7 @@ async function getUserByEmail(email) {
 
 module.exports = async function handler(req, res) {
   try {
+
     if (req.method !== "POST") {
       return res.status(405).json({
         error: "Method not allowed"
@@ -89,51 +94,72 @@ module.exports = async function handler(req, res) {
 
     const body = req.body || {};
 
-    const name = String(body.name || "").trim();
+    const name =
+      String(body.name || "").trim();
 
-    const email = String(body.email || "")
-      .trim()
-      .toLowerCase();
+    const email =
+      String(body.email || "")
+        .trim()
+        .toLowerCase();
 
-    const password = String(body.password || "");
+    const password =
+      String(body.password || "");
 
-    const role = [
-      "Learner",
-      "Trainer",
-      "Management"
-    ].includes(body.role)
-      ? body.role
-      : "Learner";
+    const role =
+      [
+        "Learner",
+        "Trainer",
+        "Admin",
+        "Management"
+      ].includes(body.role)
+        ? body.role
+        : "Learner";
 
-    if (!name || !email || password.length < 6) {
+    if (
+      !name ||
+      !email ||
+      password.length < 6
+    ) {
       return res.status(400).json({
         error:
           "Name, email, and a password of at least 6 characters are required."
       });
     }
 
-    let user = await getUserByEmail(email);
+    let user =
+      await getUserByEmail(email);
 
+    /*
+     * NEW USER
+     */
     if (!user) {
-      const created = await supabaseRequest(
-        "users",
-        {
-          method: "POST",
-          body: {
-            name,
-            email,
-            password:
-              await hashPassword(password),
-            role,
-            status: "Active",
-            progress: 0
+
+      const created =
+        await supabaseRequest(
+          "users",
+          {
+            method: "POST",
+
+            body: {
+              name,
+              email,
+              password:
+                await hashPassword(password),
+              role,
+              status: "Active",
+              progress: 0
+            }
           }
-        }
-      );
+        );
 
       user = created[0];
 
-    } else {
+    }
+
+    /*
+     * EXISTING USER
+     */
+    else {
 
       const matches =
         await passwordMatches(
@@ -142,6 +168,7 @@ module.exports = async function handler(req, res) {
         );
 
       if (!matches) {
+
         return res.status(401).json({
           error:
             "Incorrect password. Please try again."
@@ -149,6 +176,9 @@ module.exports = async function handler(req, res) {
       }
     }
 
+    /*
+     * NEVER SEND PASSWORD TO BROWSER
+     */
     const {
       password: hiddenPassword,
       ...safeUser
@@ -160,7 +190,10 @@ module.exports = async function handler(req, res) {
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Login error:",
+      error
+    );
 
     return res.status(500).json({
       error:
