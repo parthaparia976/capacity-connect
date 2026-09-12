@@ -426,22 +426,22 @@
 
       <div class="stat">
         <div class="stat-label">Courses enrolled</div>
-        <div class="stat-value">4</div>
+        <div class="stat-value">0</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Courses completed</div>
-        <div class="stat-value green">2</div>
+        <div class="stat-value green">0</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Learning progress</div>
-        <div class="stat-value">65%</div>
+        <div class="stat-value">0%</div>
       </div>
 
       <div class="stat">
         <div class="stat-label">Average quiz score</div>
-        <div class="stat-value green">82%</div>
+        <div class="stat-value green">0%</div>
       </div>
 
     </div>
@@ -466,12 +466,12 @@
         </p>
 
         <div class="progress">
-          <div class="progress-bar"></div>
+          <div class="progress-bar" style="width:0%"></div>
         </div>
 
         <div class="course-footer">
-          <span>65% completed</span>
-          <span>12h</span>
+          <span>% completed</span>
+          <span>0h</span>
         </div>
 
         <a href="learning.html" class="start-btn">
@@ -540,10 +540,262 @@
 
 
 <script>
-  function logout() {
-    localStorage.removeItem("capacityConnectUser");
-    window.location.href = "login.html";
+  const currentUser = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "{}"
+  );
+
+  if (!currentUser.email) {
+    window.location.replace("login.html");
   }
+
+  const statValues =
+    document.querySelectorAll(".stat-value");
+
+  const courseList =
+    document.getElementById("course-list");
+
+  async function loadLearnerDashboard() {
+    try {
+      const response = await fetch(
+        "/api/enrollments?email=" +
+        encodeURIComponent(currentUser.email)
+      );
+
+      const enrollments =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          enrollments?.error ||
+          "Could not load learning data."
+        );
+      }
+
+      /*
+       * REAL DASHBOARD STATS
+       */
+
+      const enrolledCount =
+        enrollments.length;
+
+      const completedCount =
+        enrollments.filter(
+          item => Number(item.progress) >= 100
+        ).length;
+
+      const totalProgress =
+        enrollments.length
+          ? Math.round(
+              enrollments.reduce(
+                (sum, item) =>
+                  sum + Number(item.progress || 0),
+                0
+              ) / enrollments.length
+            )
+          : 0;
+
+      statValues[0].textContent =
+        enrolledCount;
+
+      statValues[1].textContent =
+        completedCount;
+
+      statValues[2].textContent =
+        totalProgress + "%";
+
+      /*
+       * Quiz score এখন 0 থাকবে।
+       * Quiz API connect করার পরে
+       * এটাও real data হবে।
+       */
+
+      statValues[3].textContent =
+        "0%";
+
+      /*
+       * PROFILE
+       */
+
+      const profileName =
+        document.querySelector(".profile strong");
+
+      if (profileName) {
+        profileName.textContent =
+          currentUser.name || "Learner";
+      }
+
+      const avatar =
+        document.querySelector(".profile .avatar");
+
+      if (avatar) {
+        avatar.textContent =
+          (currentUser.name || "L")
+            .split(" ")
+            .map(x => x[0])
+            .slice(0, 2)
+            .join("")
+            .toUpperCase();
+      }
+
+      /*
+       * COURSE LIST
+       */
+
+      if (!enrollments.length) {
+
+        courseList.innerHTML = `
+          <div class="course">
+            <div class="course-icon">+</div>
+
+            <h3>No courses enrolled</h3>
+
+            <p>
+              Explore available courses and start
+              your learning journey.
+            </p>
+
+            <div class="progress">
+              <div
+                class="progress-bar"
+                style="width:0%"
+              ></div>
+            </div>
+
+            <div class="course-footer">
+              <span>0% completed</span>
+              <span>0h</span>
+            </div>
+
+            <a
+              href="my-courses.html"
+              class="start-btn"
+            >
+              Explore Courses →
+            </a>
+          </div>
+        `;
+
+        return;
+      }
+
+      courseList.innerHTML =
+        enrollments
+          .map(item => {
+
+            const progress =
+              Math.max(
+                0,
+                Math.min(
+                  100,
+                  Number(item.progress || 0)
+                )
+              );
+
+            const course =
+              item.course || {};
+
+            return `
+              <div class="course">
+
+                <div class="course-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m3 9 9-5 9 5-9 5-9-5z"
+                    ></path>
+
+                    <path
+                      d="M7 11v5c3 2 7 2 10 0v-5"
+                    ></path>
+                  </svg>
+                </div>
+
+                <h3>
+                  ${
+                    course.title ||
+                    "Learning Course"
+                  }
+                </h3>
+
+                <p>
+                  ${
+                    course.description ||
+                    "Continue your learning journey."
+                  }
+                </p>
+
+                <div class="progress">
+
+                  <div
+                    class="progress-bar"
+                    style="width:${progress}%"
+                  ></div>
+
+                </div>
+
+                <div class="course-footer">
+
+                  <span>
+                    ${progress}% completed
+                  </span>
+
+                  <span>
+                    ${
+                      progress > 0
+                        ? "In progress"
+                        : "0h"
+                    }
+                  </span>
+
+                </div>
+
+                <a
+                  href="learning.html"
+                  class="start-btn"
+                >
+                  ${
+                    progress > 0
+                      ? "Continue Learning →"
+                      : "Start Learning →"
+                  }
+                </a>
+
+              </div>
+            `;
+          })
+          .join("");
+
+    } catch (error) {
+
+      console.error(
+        "Dashboard error:",
+        error
+      );
+
+      /*
+       * Keep a clean zero state if
+       * data cannot be loaded.
+       */
+
+      statValues[0].textContent = "0";
+      statValues[1].textContent = "0";
+      statValues[2].textContent = "0%";
+      statValues[3].textContent = "0%";
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem(
+      "capacityConnectUser"
+    );
+
+    window.location.replace(
+      "login.html"
+    );
+  }
+
+  loadLearnerDashboard();
 </script>
 
 </body>
