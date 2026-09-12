@@ -333,17 +333,143 @@
   </main>
 
 
-  <script>
+<script>
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
 
-    const user = JSON.parse(
-      localStorage.getItem("capacityConnectUser") || "null"
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
+  }
+
+  const summaryNumbers =
+    document.querySelectorAll(".summary .number");
+
+  const sections =
+    document.querySelectorAll(".section");
+
+  const courseProgressSection = sections[0];
+  const achievementsSection = sections[1];
+
+  const learningProgress =
+    Number(user.learningProgress || 0);
+
+  const quizScore =
+    Number(user.quizScore || 0);
+
+  const quizAttempts =
+    Number(user.quizAttempts || 0);
+
+  /* New user: everything starts at zero */
+  if (quizAttempts === 0) {
+
+    summaryNumbers[0].textContent = "0%";
+    summaryNumbers[1].textContent = "0";
+    summaryNumbers[2].textContent = "0";
+    summaryNumbers[3].textContent = "0%";
+
+    courseProgressSection
+      .querySelectorAll(".course-row")
+      .forEach(row => row.remove());
+
+    courseProgressSection.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div
+          class="details"
+          style="padding:20px 0;text-align:center;"
+        >
+          No course progress yet.
+        </div>
+      `
     );
 
-    if (!user) {
-      window.location.replace("login.html");
-    }
+    achievementsSection
+      .querySelectorAll(".achievement")
+      .forEach(item => item.remove());
 
-  </script>
+    achievementsSection.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div
+          class="details"
+          style="padding:20px 0;text-align:center;"
+        >
+          No achievements yet.
+        </div>
+      `
+    );
+
+  } else {
+
+    /* After quiz submission */
+    summaryNumbers[0].textContent =
+      learningProgress + "%";
+
+    summaryNumbers[1].textContent = "0";
+    summaryNumbers[2].textContent = "0";
+
+    summaryNumbers[3].textContent =
+      quizScore + "%";
+
+    courseProgressSection
+      .querySelectorAll(".course-row")
+      .forEach(row => row.remove());
+
+    courseProgressSection.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="course-row">
+
+          <div class="course-title">
+            <span>Quiz Progress</span>
+            <span>${learningProgress}%</span>
+          </div>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              style="width:${learningProgress}%"
+            ></div>
+          </div>
+
+          <div class="details">
+            Quiz attempt ${quizAttempts}
+            · Score ${quizScore}%
+          </div>
+
+        </div>
+      `
+    );
+
+    achievementsSection
+      .querySelectorAll(".achievement")
+      .forEach(item => item.remove());
+
+    achievementsSection.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="achievement">
+
+          <div class="achievement-icon">
+            📝
+          </div>
+
+          <div>
+            <strong>Quiz Completed</strong>
+
+            <div class="details">
+              Attempt ${quizAttempts}
+              · Score ${quizScore}%
+            </div>
+          </div>
+
+        </div>
+      `
+    );
+  }
+</script>
 
 </body>
 </html>

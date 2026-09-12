@@ -213,15 +213,132 @@
 
   </div>
 
-  <script>
-    const user = JSON.parse(
-      localStorage.getItem("capacityConnectUser") || "null"
+<script>
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
+
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
+  }
+
+  const learningProgress =
+    Number(user.learningProgress || 0);
+
+  const quizScore =
+    Number(user.quizScore || 0);
+
+  const quizAttempts =
+    Number(user.quizAttempts || 0);
+
+  const cards =
+    document.querySelectorAll(".card");
+
+  const cardProgressBars =
+    document.querySelectorAll(
+      ".card .progress-bar"
     );
 
-    if (!user) {
-      window.location.replace("login.html");
+  const competencyTexts =
+    document.querySelectorAll(
+      ".card small"
+    );
+
+  const cardsContainer =
+    document.querySelector(".cards");
+
+  const aiBox =
+    document.querySelector(".ai-box");
+
+  /*
+   * NEW USER
+   */
+  if (quizAttempts === 0) {
+
+    cardsContainer.innerHTML = `
+      <div class="card">
+
+        <div class="icon">📝</div>
+
+        <h3>
+          No recommendations yet
+        </h3>
+
+        <p>
+          Complete a quiz to begin your
+          personalized learning recommendations.
+        </p>
+
+        <div class="progress">
+          <div
+            class="progress-bar"
+            style="width:0%"
+          ></div>
+        </div>
+
+        <small>
+          Current competency: 0%
+        </small>
+
+      </div>
+    `;
+
+    aiBox.innerHTML = `
+      <h2>
+        🤖 Smart Recommendation
+      </h2>
+
+      <p>
+        Complete your first quiz to receive
+        personalized recommendations.
+      </p>
+    `;
+
+    return;
+  }
+
+  /*
+   * AFTER QUIZ
+   */
+  cards.forEach(card => {
+
+    const progressBar =
+      card.querySelector(
+        ".progress-bar"
+      );
+
+    const competency =
+      card.querySelector(
+        "small"
+      );
+
+    if (progressBar) {
+      progressBar.style.width =
+        learningProgress + "%";
     }
-  </script>
+
+    if (competency) {
+      competency.textContent =
+        "Current competency: " +
+        learningProgress + "%";
+    }
+
+  });
+
+  aiBox.innerHTML = `
+    <h2>
+      🤖 Smart Recommendation
+    </h2>
+
+    <p>
+      Your latest assessment score is
+      <strong>${quizScore}%</strong>.
+      Keep learning to improve your
+      competency and overall progress.
+    </p>
+  `;
+</script>
 
 </body>
 </html>

@@ -381,17 +381,174 @@
   </main>
 
 
-  <script>
+<script>
+  const user = JSON.parse(
+    localStorage.getItem("capacityConnectUser") || "null"
+  );
 
-    const user = JSON.parse(
-      localStorage.getItem("capacityConnectUser") || "null"
+  if (!user || !user.email) {
+    window.location.replace("login.html");
+    throw new Error("User is not logged in");
+  }
+
+  const learningProgress =
+    Number(user.learningProgress || 0);
+
+  const quizAttempts =
+    Number(user.quizAttempts || 0);
+
+  const skills =
+    document.querySelectorAll(".skill");
+
+  const overviewNumbers =
+    document.querySelectorAll(
+      ".overview .number"
     );
 
-    if (!user) {
-      window.location.replace("login.html");
+  /*
+   * NEW USER
+   */
+  if (quizAttempts === 0) {
+
+    overviewNumbers[0].textContent = "0%";
+    overviewNumbers[1].textContent = "0";
+    overviewNumbers[2].textContent = "0";
+
+    skills.forEach(skill => {
+
+      const percentage =
+        skill.querySelector(
+          ".skill-header span:last-child"
+        );
+
+      const fill =
+        skill.querySelector(".fill");
+
+      const level =
+        skill.querySelector(".level");
+
+      if (percentage) {
+        percentage.textContent = "0%";
+      }
+
+      if (fill) {
+        fill.style.width = "0%";
+      }
+
+      if (level) {
+        level.textContent =
+          "Level: Not assessed";
+      }
+
+    });
+
+    /*
+     * Remove fake skill gaps.
+     */
+    document
+      .querySelectorAll(".gap")
+      .forEach(gap => gap.remove());
+
+    const recommended =
+      document.querySelector(
+        ".recommended"
+      );
+
+    if (recommended) {
+      recommended.innerHTML = `
+        <h3>💡 Recommended Learning</h3>
+
+        <p>
+          Complete a quiz to begin your
+          competency assessment.
+        </p>
+      `;
     }
 
-  </script>
+  } else {
+
+    /*
+     * AFTER QUIZ
+     *
+     * For now the quiz gives an initial
+     * competency value equal to the
+     * learning progress.
+     */
+
+    overviewNumbers[0].textContent =
+      learningProgress + "%";
+
+    overviewNumbers[1].textContent = "1";
+
+    overviewNumbers[2].textContent = "1";
+
+    skills.forEach(skill => {
+
+      const percentage =
+        skill.querySelector(
+          ".skill-header span:last-child"
+        );
+
+      const fill =
+        skill.querySelector(".fill");
+
+      const level =
+        skill.querySelector(".level");
+
+      if (percentage) {
+        percentage.textContent =
+          learningProgress + "%";
+      }
+
+      if (fill) {
+        fill.style.width =
+          learningProgress + "%";
+      }
+
+      if (level) {
+
+        if (learningProgress >= 70) {
+          level.textContent =
+            "Level: Advanced";
+        } else if (
+          learningProgress >= 40
+        ) {
+          level.textContent =
+            "Level: Intermediate";
+        } else {
+          level.textContent =
+            "Level: Developing";
+        }
+
+      }
+
+    });
+
+    /*
+     * Remove fake skill gaps.
+     */
+    document
+      .querySelectorAll(".gap")
+      .forEach(gap => gap.remove());
+
+    const recommended =
+      document.querySelector(
+        ".recommended"
+      );
+
+    if (recommended) {
+      recommended.innerHTML = `
+        <h3>💡 Recommended Learning</h3>
+
+        <p>
+          Keep learning to improve your
+          competency score.
+        </p>
+      `;
+    }
+
+  }
+</script>
 
 </body>
 </html>
