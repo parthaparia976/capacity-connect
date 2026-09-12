@@ -306,12 +306,9 @@
     throw new Error("User is not logged in");
   }
 
-  const quizForm =
-    document.getElementById("quiz-form");
-
-  quizForm.addEventListener(
-    "submit",
-    async function (event) {
+  document
+    .getElementById("quiz-form")
+    .addEventListener("submit", async function (event) {
 
       event.preventDefault();
 
@@ -340,21 +337,19 @@
       }
 
       const score =
-        Math.round(
-          (correct / 4) * 100
-        );
+        Math.round((correct / 4) * 100);
 
       /*
-       * Quiz submit হলে minimum learning
-       * progress 20% হবে.
-       *
-       * Course enrollment বাড়বে না.
+       * Quiz submit হলে learning progress
+       * minimum 20% হবে.
        */
+      const learningProgress = 20;
 
-      const progressAfterQuiz = 20;
-
-      document.getElementById("score")
-        .textContent = score + "%";
+      /*
+       * Show result
+       */
+      document.getElementById("score").textContent =
+        score + "%";
 
       const message =
         document.getElementById(
@@ -366,24 +361,46 @@
         message.textContent =
           "Congratulations! You passed the quiz.";
 
-        message.className =
-          "passed";
+        message.className = "passed";
 
       } else {
 
         message.textContent =
           "You did not reach the passing mark. Keep learning and try again.";
 
-        message.className =
-          "failed";
+        message.className = "failed";
       }
 
-      quizForm.style.display =
-        "none";
+      /*
+       * Save quiz data locally so the
+       * learner dashboard can read it.
+       */
+      const updatedUser = {
+        ...user,
 
-      document.getElementById("result")
-        .style.display = "block";
+        quizScore: score,
 
+        learningProgress:
+          Math.max(
+            Number(user.learningProgress || 0),
+            learningProgress
+          ),
+
+        quizAttempts:
+          Number(user.quizAttempts || 0) + 1
+      };
+
+      localStorage.setItem(
+        "capacityConnectUser",
+        JSON.stringify(updatedUser)
+      );
+
+      /*
+       * Save result to backend too.
+       *
+       * We send the user's email.
+       * Course count is NOT increased here.
+       */
       try {
 
         const response =
@@ -398,22 +415,9 @@
               },
 
               body: JSON.stringify({
-
-                email:
-                  user.email,
-
-                score:
-
-                  score,
-
-                progress:
-                  progressAfterQuiz,
-
-                /*
-                 * This is a quiz attempt.
-                 * It does NOT mean the user
-                 * enrolled in a course.
-                 */
+                email: user.email,
+                score: score,
+                progress: learningProgress,
                 attemptOnly: true
               })
             }
@@ -423,42 +427,11 @@
           await response.json();
 
         if (!response.ok) {
-
           console.error(
-            "Quiz save error:",
+            "Quiz API error:",
             result
           );
-
-          return;
         }
-
-        /*
-         * Keep the current dashboard
-         * user data intact.
-         */
-
-        localStorage.setItem(
-          "capacityConnectUser",
-          JSON.stringify({
-            ...user,
-
-            quizScore:
-              score,
-
-            quizAttempts:
-              (Number(
-                user.quizAttempts
-              ) || 0) + 1,
-
-            learningProgress:
-              Math.max(
-                Number(
-                  user.learningProgress
-                ) || 0,
-                progressAfterQuiz
-              )
-          })
-        );
 
       } catch (error) {
 
@@ -468,8 +441,17 @@
         );
       }
 
-    }
-  );
+      /*
+       * Hide quiz and show result
+       */
+      document.getElementById(
+        "quiz-form"
+      ).style.display = "none";
+
+      document.getElementById(
+        "result"
+      ).style.display = "block";
+    });
 </script>
 
 </body>
